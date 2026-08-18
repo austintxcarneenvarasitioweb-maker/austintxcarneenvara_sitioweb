@@ -1,0 +1,220 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+@theme {
+  --color-bg: #1a0e10;
+  --color-surface: #1e0d08;
+  --color-surface-light: #231c17;
+  --color-ember: #c84914;
+  --color-copper: #b8975a;
+  --color-cream: #ede0cc;
+  --color-cream-dark: #c4b5a0;
+  --color-muted: #7a6558;
+  --color-border: #3a1e10;
+
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-body: var(--font-outfit), system-ui, sans-serif;
+}
+
+:root {
+  --background: #1a0e10;
+  --foreground: #ede0cc;
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-body: var(--font-outfit), system-ui, sans-serif;
+}
+
+/* Native smooth scrolling disabled — Lenis handles inertia scroll on the site */
+
+/* ── Critical baseline ─────────────────────────────── */
+body {
+  background-color: #1a0e10;
+  color: #ede0cc;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* Cormorant Garamond Light — next/font self-hosts weight 300 so it actually applies */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: rgb(217, 196, 163);
+}
+
+.font-display {
+  font-family: var(--font-display) !important;
+}
+
+.font-body {
+  font-family: var(--font-body) !important;
+}
+
+/* ── Explicit bg/text fallbacks for color names that may conflict ── */
+.bg-bg {
+  background-color: #1a0e10 !important;
+}
+
+.text-bg {
+  color: #1a0e10 !important;
+}
+
+/* ── Animations ─────────────────────────────────────── */
+@keyframes float-fire {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float-fire 2.5s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s ease-out forwards;
+}
+
+/* ── Buttons ────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #d9c4a3;
+  color: #1a0e10;
+  border: 1px solid #d9c4a3;
+  padding: 12px 24px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+.btn-primary:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: #1a0e10;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: transparent;
+  color: #d9c4a3;
+  border: 1px solid rgba(217, 196, 163, 0.55);
+  padding: 12px 24px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+.btn-outline:hover {
+  background-color: #d9c4a3;
+  border-color: #d9c4a3;
+  color: #1a0e10;
+}
+
+/* Hero banner CTAs */
+.btn-hero {
+  font-size: 14px;
+  padding: 16px 32px;
+}
+
+/* Text link with underline fill L→R */
+.link-underline {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #d9c4a3;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.link-underline::after,
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-underline:hover::after,
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-link {
+  position: relative;
+  color: rgba(237, 224, 204, 0.55);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+.nav-link:hover {
+  color: rgba(237, 224, 204, 0.92);
+}
+.nav-link.is-active {
+  color: #ede0cc;
+}
+
+/* ── Hover states for server components ─────────────── */
+.catering-card {
+  transition: border-color 0.3s;
+}
+.catering-card:hover {
+  border-color: rgba(200, 73, 20, 0.4) !important;
+}
+
+/* ── Price list dotted leader ───────────────────────── */
+.dotted-leader {
+  flex: 1;
+  border-bottom: 1px dotted rgba(122, 101, 88, 0.5);
+  margin: 0 0.75rem;
+  min-width: 1rem;
+  align-self: flex-end;
+  margin-bottom: 0.35rem;
+}
