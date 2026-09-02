@@ -5,11 +5,11 @@ const viewOnly = { readOnly: true } as const
 export const QuoteRequests: CollectionConfig = {
   slug: 'quote-requests',
   labels: { singular: 'Solicitud', plural: 'Solicitudes' },
+  disableDuplicate: true,
   admin: {
     useAsTitle: 'fullName',
     group: 'Ventas',
     defaultColumns: ['fullName', 'email', 'source', 'createdAt'],
-    disableDuplicate: true,
     hideAPIURL: true,
     description: 'Solicitudes enviadas desde el sitio. Solo lectura.',
   },
