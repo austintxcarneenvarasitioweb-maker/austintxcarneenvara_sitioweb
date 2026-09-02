@@ -1,23 +1,27 @@
 'use client'
 
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { FlameIcon } from '@/components/ui/FlameIcon'
 import { HeroBackdrop } from '@/components/motion/HeroBackdrop'
 import { HeroReveal, HeroRevealItem } from '@/components/motion/HeroReveal'
+import { Link } from '@/i18n/navigation'
 
 interface HeroProps {
   title: string
   subtitle: string
   imageUrl?: string
+  videoUrl?: string
 }
 
-export function Hero({ title, subtitle, imageUrl }: HeroProps) {
+export function Hero({ title, subtitle, imageUrl, videoUrl }: HeroProps) {
+  const t = useTranslations('hero')
   const titleParts = title.split('*')
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
       <HeroBackdrop
         imageUrl={imageUrl}
+        videoUrl={videoUrl}
         fallback="home"
         overlay="home"
         ariaLabel="Fire-grilled meats"
@@ -39,9 +43,10 @@ export function Hero({ title, subtitle, imageUrl }: HeroProps) {
                 textTransform: 'uppercase',
                 fontFamily: 'var(--font-body)',
                 fontWeight: 500,
+                textShadow: '0 1px 12px rgba(26,14,16,0.7)',
               }}
             >
-              Austin TX · Carne en Vara
+              {t('label')}
             </p>
           </div>
         </HeroRevealItem>
@@ -64,7 +69,7 @@ export function Hero({ title, subtitle, imageUrl }: HeroProps) {
             if (i % 2 === 1) {
               return (
                 <HeroRevealItem key={i} style={endStyle}>
-                  <em style={{ color: 'hsl(20, 100%, 50%)', fontStyle: 'italic', fontWeight: 300, display: 'block' }}>
+                  <em style={{ color: 'hsl(20, 100%, 50%)', fontStyle: 'italic', fontWeight: 300, display: 'block', textShadow: '0 2px 18px rgba(26,14,16,0.65)' }}>
                     {part}
                   </em>
                 </HeroRevealItem>
@@ -73,7 +78,7 @@ export function Hero({ title, subtitle, imageUrl }: HeroProps) {
             if (!part.trim()) return null
             return (
               <HeroRevealItem key={i} style={endStyle}>
-                <span style={{ display: 'block', fontWeight: 300 }}>{part.trim()}</span>
+                <span style={{ display: 'block', fontWeight: 300, textShadow: '0 2px 22px rgba(26,14,16,0.75)' }}>{part.trim()}</span>
               </HeroRevealItem>
             )
           })}
@@ -82,13 +87,14 @@ export function Hero({ title, subtitle, imageUrl }: HeroProps) {
         <HeroRevealItem>
           <p
             style={{
-              color: 'rgba(217, 196, 163, 0.85)',
+              color: 'rgba(217, 196, 163, 0.92)',
               fontSize: 'clamp(0.875rem, 1.5vw, 1rem)',
               lineHeight: 1.7,
               maxWidth: '480px',
               marginBottom: '2rem',
               fontFamily: 'var(--font-body)',
               fontWeight: 300,
+              textShadow: '0 1px 14px rgba(26,14,16,0.8)',
             }}
           >
             {subtitle}
@@ -98,10 +104,10 @@ export function Hero({ title, subtitle, imageUrl }: HeroProps) {
         <HeroRevealItem>
           <div className="flex flex-col sm:flex-row gap-3">
             <Link href="/menu" className="btn-primary btn-hero">
-              View Menu →
+              {t('viewMenu')}
             </Link>
             <Link href="/catering" className="btn-outline btn-hero">
-              Catering
+              {t('catering')}
             </Link>
           </div>
         </HeroRevealItem>
@@ -109,12 +115,26 @@ export function Hero({ title, subtitle, imageUrl }: HeroProps) {
 
       <div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
-        style={{ color: '#7a6558' }}
+        style={{
+          color: '#c4b396',
+          textShadow: '0 1px 6px rgba(0,0,0,0.55)',
+          zIndex: 10,
+        }}
         aria-hidden="true"
       >
-        <span style={{ fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: 'var(--font-body)' }}>Scroll</span>
+        <span
+          style={{
+            fontSize: '10px',
+            letterSpacing: '0.3em',
+            textTransform: 'uppercase',
+            fontFamily: 'var(--font-body)',
+            fontWeight: 400,
+          }}
+        >
+          {t('scroll')}
+        </span>
         <svg className="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M19 9l-7 7-7-7" />
         </svg>
       </div>
     </section>

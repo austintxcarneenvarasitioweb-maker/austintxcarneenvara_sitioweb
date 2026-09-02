@@ -1,5 +1,6 @@
 import type { CateringPackage } from '@/lib/mock-data'
-import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
+import { Link } from '@/i18n/navigation'
 
 interface HomeCateringProps {
   title?: string
@@ -8,25 +9,25 @@ interface HomeCateringProps {
   packages: CateringPackage[]
 }
 
-export function HomeCatering({
+export async function HomeCatering({
   title = 'Bring the fire to *your event*',
   description,
   imageUrl,
   packages,
 }: HomeCateringProps) {
+  const t = await getTranslations('sections')
   const titleParts = title.split('*')
   const preview = packages.slice(0, 4)
 
   return (
     <section
-      style={{ backgroundColor: '#1a0b07', padding: '80px 0' }}
+      style={{ backgroundColor: '#1a0e10', padding: '80px 0' }}
       aria-labelledby="home-catering-heading"
     >
       <div
         className="grid grid-cols-1 lg:grid-cols-2 items-center"
         style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 24px', gap: '48px' }}
       >
-        {/* Image */}
         <div style={{ position: 'relative', aspectRatio: '1 / 1.1', overflow: 'hidden' }}>
           {imageUrl ? (
             <div
@@ -37,14 +38,22 @@ export function HomeCatering({
               style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, #3a2010, #2a1208, #1a0a06)' }}
             />
           )}
+          <div
+            aria-hidden
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(180deg, transparent 52%, rgba(26,14,16,0.4) 74%, rgba(26,14,16,0.88) 90%, #1a0e10 100%)',
+              pointerEvents: 'none',
+            }}
+          />
         </div>
 
-        {/* Content */}
         <div>
           <p
             style={{ color: '#c84914', fontSize: '11px', letterSpacing: '0.35em', textTransform: 'uppercase', fontFamily: 'var(--font-body)', fontWeight: 500, marginBottom: '20px' }}
           >
-            Catering &amp; Events
+            {t('cateringEvents')}
           </p>
 
           <h2
@@ -68,7 +77,6 @@ export function HomeCatering({
             </p>
           )}
 
-          {/* Package mini-cards */}
           <div
             style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '32px' }}
           >
@@ -76,7 +84,7 @@ export function HomeCatering({
               <div
                 key={pkg.id}
                 className="catering-card"
-              style={{ border: '1px solid #3a1e10', padding: '20px' }}
+                style={{ border: '1px solid #3a1e10', padding: '20px' }}
               >
                 <div
                   style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#c84914', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '8px', fontFamily: 'var(--font-body)' }}
@@ -96,9 +104,11 @@ export function HomeCatering({
             ))}
           </div>
 
-          <Link href="/catering#quote" className="btn-primary btn-hero">
-            Request a Quote →
-          </Link>
+          <div className="flex justify-center lg:justify-start">
+            <Link href="/catering#quote" className="btn-primary btn-hero">
+              {t('requestQuote')}
+            </Link>
+          </div>
         </div>
       </div>
     </section>

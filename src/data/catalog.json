@@ -1,0 +1,407 @@
+{
+  "footerNote": {
+    "en": "Available: Avocado/Cilantro Sauce · Sour Cream · Hot Sauces",
+    "es": "Disponible: Guasacaca · Nata · Salsas Picantes"
+  },
+  "dishes": [
+    {
+      "slug": "carne-en-vara",
+      "name": { "en": "Beef (½ lb)", "es": "Carne en Vara (½ lb)" },
+      "tag": { "en": "Signature · ½ lb", "es": "Signature · ½ lb" },
+      "description": {
+        "en": "Half a pound of beef slow-cooked on the vara over live wood fire.",
+        "es": "Media libra de res cocinada lenta en la vara a la leña."
+      },
+      "price": "$17.99",
+      "category": "en-vara",
+      "image": "carne-en-vara",
+      "featured": true,
+      "order": 1
+    },
+    {
+      "slug": "cochino-en-vara",
+      "name": { "en": "Pork (pork belly) (½ lb)", "es": "Cochino en Vara (½ lb)" },
+      "tag": { "en": "Pork belly · ½ lb", "es": "Pork belly · ½ lb" },
+      "description": {
+        "en": "Fire-roasted pork belly, crackling skin, melting center.",
+        "es": "Panceta asada a la leña, piel crocante y centro jugoso."
+      },
+      "price": "$14.99",
+      "category": "en-vara",
+      "image": "cochino",
+      "featured": true,
+      "order": 2
+    },
+    {
+      "slug": "tacos-carne",
+      "name": { "en": "Beef tacos (3)", "es": "Tacos de Carne en Vara (3)" },
+      "tag": { "en": "3 tacos", "es": "3 tacos" },
+      "description": {
+        "en": "Three tacos loaded with fire-grilled carne en vara.",
+        "es": "Tres tacos con carne en vara a la leña."
+      },
+      "price": "$12.99",
+      "category": "platos",
+      "image": "tacos-carne",
+      "featured": true,
+      "order": 3
+    },
+    {
+      "slug": "tacos-chicharron",
+      "name": { "en": "Pork tacos (3)", "es": "Tacos de Chicharrón (3)" },
+      "tag": { "en": "3 tacos", "es": "3 tacos" },
+      "description": {
+        "en": "Three tacos with crispy chicharrón.",
+        "es": "Tres tacos de chicharrón crocante."
+      },
+      "price": "$12.99",
+      "category": "platos",
+      "image": "chicharron",
+      "featured": true,
+      "order": 4
+    },
+    {
+      "slug": "tostones-carne",
+      "name": { "en": "Beef fried green plantain (3)", "es": "Tostones de Carne en Vara (3)" },
+      "tag": { "en": "3 tostones", "es": "3 tostones" },
+      "description": {
+        "en": "Crispy tostones topped with fire-grilled carne en vara.",
+        "es": "Tostones crocantes con carne en vara a la leña."
+      },
+      "price": "$12.99",
+      "category": "platos",
+      "image": "tostones",
+      "featured": true,
+      "order": 5
+    },
+    {
+      "slug": "cachapa-queso",
+      "name": { "en": "With soft cheese", "es": "Con Queso de Mano" },
+      "tag": { "en": "Cachapa", "es": "Cachapa" },
+      "description": {
+        "en": "Sweet corn pancake with fresh queso de mano.",
+        "es": "Cachapa de maíz tierno con queso de mano."
+      },
+      "price": "$12.99",
+      "category": "cachapas",
+      "image": "cachapa",
+      "featured": true,
+      "order": 6
+    },
+    {
+      "slug": "cachapa-doble-queso",
+      "name": { "en": "With double soft cheese", "es": "Con Doble Queso de Mano" },
+      "tag": { "en": "Cachapa", "es": "Cachapa" },
+      "description": {
+        "en": "Sweet corn pancake with double queso de mano.",
+        "es": "Cachapa de maíz tierno con doble queso de mano."
+      },
+      "price": "$17.99",
+      "category": "cachapas",
+      "image": "cachapa",
+      "featured": false,
+      "order": 7
+    },
+    {
+      "slug": "chorizo",
+      "name": { "en": "Sausage", "es": "Chorizo" },
+      "tag": { "en": "Add-on", "es": "Adicional" },
+      "description": { "en": "Fire-grilled chorizo.", "es": "Chorizo a la leña." },
+      "price": "$1.99",
+      "category": "adicionales",
+      "featured": false,
+      "order": 8
+    },
+    {
+      "slug": "morcilla",
+      "name": { "en": "Blood sausage", "es": "Morcilla" },
+      "tag": { "en": "Add-on", "es": "Adicional" },
+      "description": { "en": "Traditional blood sausage.", "es": "Morcilla tradicional." },
+      "price": "$2.99",
+      "category": "adicionales",
+      "featured": false,
+      "order": 9
+    },
+    {
+      "slug": "hallaquitas",
+      "name": { "en": "Pork tamales", "es": "Hallaquitas de Chicharrón" },
+      "tag": { "en": "Add-on", "es": "Adicional" },
+      "description": {
+        "en": "Corn dumplings with chicharrón.",
+        "es": "Hallaquitas de maíz con chicharrón."
+      },
+      "price": "$3.99",
+      "category": "adicionales",
+      "featured": false,
+      "order": 10
+    },
+    {
+      "slug": "queso-de-mano",
+      "name": { "en": "Hand cheese", "es": "Queso de Mano (½ rueda)" },
+      "tag": { "en": "Add-on", "es": "Adicional" },
+      "description": {
+        "en": "Fresh Venezuelan hand cheese.",
+        "es": "Queso de mano fresco venezolano."
+      },
+      "price": "$4.99",
+      "category": "adicionales",
+      "featured": false,
+      "order": 11
+    },
+    {
+      "slug": "ensalada-rallada",
+      "name": { "en": "Coleslaw", "es": "Ensalada Rallada" },
+      "tag": { "en": "Side", "es": "Contorno" },
+      "description": { "en": "Fresh shredded salad.", "es": "Ensalada rallada fresca." },
+      "price": "$4.99",
+      "category": "contornos",
+      "featured": false,
+      "order": 12
+    },
+    {
+      "slug": "ensalada-papa",
+      "name": { "en": "Potato salad", "es": "Ensalada de Papa" },
+      "tag": { "en": "Side", "es": "Contorno" },
+      "description": { "en": "Potato salad.", "es": "Ensalada de papa." },
+      "price": "$4.99",
+      "category": "contornos",
+      "featured": false,
+      "order": 13
+    },
+    {
+      "slug": "yuca-sancochada",
+      "name": { "en": "Boiled cassava", "es": "Yuca Sancochada" },
+      "tag": { "en": "Side", "es": "Contorno" },
+      "description": { "en": "Boiled yuca.", "es": "Yuca sancochada." },
+      "price": "$5.99",
+      "category": "contornos",
+      "image": "yuca",
+      "featured": false,
+      "order": 14
+    },
+    {
+      "slug": "yuca-frita",
+      "name": { "en": "Fried cassava", "es": "Yuca Frita" },
+      "tag": { "en": "Side", "es": "Contorno" },
+      "description": { "en": "Golden fried yuca.", "es": "Yuca frita dorada." },
+      "price": "$5.99",
+      "category": "contornos",
+      "image": "yuca",
+      "featured": false,
+      "order": 15
+    },
+    {
+      "slug": "tostones",
+      "name": { "en": "Fried green plantain", "es": "Tostones" },
+      "tag": { "en": "Side", "es": "Contorno" },
+      "description": { "en": "Crispy fried green plantain.", "es": "Tostones de plátano verde." },
+      "price": "$5.99",
+      "category": "contornos",
+      "image": "tostones",
+      "featured": false,
+      "order": 16
+    },
+    {
+      "slug": "tajadas",
+      "name": { "en": "Fried sweet plantain", "es": "Tajadas" },
+      "tag": { "en": "Side", "es": "Contorno" },
+      "description": { "en": "Fried ripe plantain.", "es": "Tajadas de plátano maduro." },
+      "price": "$5.99",
+      "category": "contornos",
+      "featured": false,
+      "order": 17
+    },
+    {
+      "slug": "combo-1",
+      "name": { "en": "Single plate", "es": "Para 1" },
+      "tag": { "en": "Meal", "es": "Combo" },
+      "description": {
+        "en": "¼ lb beef, ¼ lb pork, 1 sausage, cassava, fried green plantain, choice of salad and 1 drink.",
+        "es": "¼ lb carne en vara, ¼ lb cochino en vara, 1 chorizo, yuca, plátano, ensalada de preferencia y 1 bebida."
+      },
+      "price": "$27.00",
+      "category": "combos",
+      "image": "combo",
+      "featured": false,
+      "order": 18
+    },
+    {
+      "slug": "combo-2",
+      "name": { "en": "For two", "es": "Para 2" },
+      "tag": { "en": "Meal", "es": "Combo" },
+      "description": {
+        "en": "½ lb beef, ½ lb pork, 2 sausages, cassava, fried green plantain, 1 pork tamal, choice of salad and 2 drinks.",
+        "es": "½ lb carne en vara, ½ lb cochino en vara, 2 chorizos, yuca, plátano, 1 hallaquita, ensalada de preferencia y 2 bebidas."
+      },
+      "price": "$50.00",
+      "category": "combos",
+      "image": "combo",
+      "featured": false,
+      "order": 19
+    },
+    {
+      "slug": "combo-4",
+      "name": { "en": "For four", "es": "Para 4" },
+      "tag": { "en": "Meal", "es": "Combo" },
+      "description": {
+        "en": "1 lb beef, 1 lb pork, 4 sausages, cassava, fried green plantain, 2 pork tamales, choice of salad and 4 drinks.",
+        "es": "1 lb carne en vara, 1 lb cochino en vara, 4 chorizos, yuca, plátano, 2 hallaquitas, ensalada de preferencia y 4 bebidas."
+      },
+      "price": "$100.00",
+      "category": "combos",
+      "image": "combo",
+      "featured": false,
+      "order": 20
+    },
+    {
+      "slug": "picadillo-llanero",
+      "name": { "en": "On firewood beef soup", "es": "Picadillo Llanero" },
+      "tag": { "en": "Soup", "es": "Sopa" },
+      "description": {
+        "en": "Hearty llanero-style soup with shredded beef and vegetables.",
+        "es": "Sopa llanera con carne desmechada y vegetales."
+      },
+      "price": "$15.99",
+      "category": "sopa",
+      "image": "sopa",
+      "featured": false,
+      "order": 21
+    },
+    {
+      "slug": "agua",
+      "name": { "en": "Water", "es": "Agua" },
+      "tag": { "en": "Drink", "es": "Bebida" },
+      "description": { "en": "Bottled water.", "es": "Agua embotellada." },
+      "price": "$1.99",
+      "category": "bebidas",
+      "featured": false,
+      "order": 22
+    },
+    {
+      "slug": "coca-cola",
+      "name": { "en": "Coke", "es": "Coca Cola" },
+      "tag": { "en": "Drink", "es": "Bebida" },
+      "description": { "en": "Coca-Cola.", "es": "Coca Cola." },
+      "price": "$2.99",
+      "category": "bebidas",
+      "featured": false,
+      "order": 23
+    },
+    {
+      "slug": "coca-cola-mexicana",
+      "name": { "en": "Mexican Coke", "es": "Coca Cola Mexicana" },
+      "tag": { "en": "Drink", "es": "Bebida" },
+      "description": { "en": "Mexican Coca-Cola in glass bottle.", "es": "Coca Cola mexicana en botella de vidrio." },
+      "price": "$3.49",
+      "category": "bebidas",
+      "featured": false,
+      "order": 24
+    },
+    {
+      "slug": "sprite",
+      "name": { "en": "Sprite", "es": "Sprite" },
+      "tag": { "en": "Drink", "es": "Bebida" },
+      "description": { "en": "Sprite.", "es": "Sprite." },
+      "price": "$2.99",
+      "category": "bebidas",
+      "featured": false,
+      "order": 25
+    },
+    {
+      "slug": "malta",
+      "name": { "en": "Malta", "es": "Malta" },
+      "tag": { "en": "Drink", "es": "Bebida" },
+      "description": { "en": "Malta.", "es": "Malta." },
+      "price": "$2.99",
+      "category": "bebidas",
+      "featured": false,
+      "order": 26
+    },
+    {
+      "slug": "papelon",
+      "name": { "en": "Sugarcane limeade", "es": "Papelón con Limón" },
+      "tag": { "en": "Drink", "es": "Bebida" },
+      "description": { "en": "Sugarcane juice with lime.", "es": "Papelón con limón." },
+      "price": "$3.99",
+      "category": "bebidas",
+      "featured": false,
+      "order": 27
+    },
+    {
+      "slug": "tres-leches",
+      "name": { "en": "Tres leches", "es": "Tres Leches" },
+      "tag": { "en": "Dessert", "es": "Postre" },
+      "description": { "en": "Classic tres leches cake.", "es": "Torta tres leches clásica." },
+      "price": "$6.99",
+      "category": "postres",
+      "featured": false,
+      "order": 28
+    }
+  ],
+  "packages": [
+    {
+      "slug": "family-feast",
+      "name": { "en": "Family Feast", "es": "Banquete Familiar" },
+      "guestRange": { "en": "10–20 guests", "es": "10–20 invitados" },
+      "price": "from $250",
+      "description": {
+        "en": "An intimate spread of our fire-grilled favorites for the family table.",
+        "es": "Una mesa íntima con nuestros favoritos a la leña para la familia."
+      },
+      "features": {
+        "en": ["Carne & pork on the vara", "Chorizo and sides", "Cachapas", "Guasacaca, nata & hot sauces"],
+        "es": ["Carne y cochino en vara", "Chorizo y contornos", "Cachapas", "Guasacaca, nata y salsas picantes"]
+      },
+      "highlighted": false,
+      "order": 1
+    },
+    {
+      "slug": "corporate",
+      "name": { "en": "Corporate Package", "es": "Paquete Corporativo" },
+      "guestRange": { "en": "30–80 guests", "es": "30–80 invitados" },
+      "price": "from $900",
+      "description": {
+        "en": "Impress the office with a full llanero grilling experience and clean service.",
+        "es": "Impresiona a la oficina con la experiencia llanera completa y servicio impecable."
+      },
+      "features": {
+        "en": ["Live-fire station", "Assorted meats & sides", "Vegetarian options", "Full setup & staff"],
+        "es": ["Estación a la leña", "Carnes y contornos variados", "Opciones vegetarianas", "Montaje y personal completo"]
+      },
+      "highlighted": false,
+      "order": 2
+    },
+    {
+      "slug": "premium-fire",
+      "name": { "en": "Premium Fire Experience", "es": "Experiencia Premium" },
+      "guestRange": { "en": "50–150 guests", "es": "50–150 invitados" },
+      "price": "custom",
+      "description": {
+        "en": "Our signature open-fire showcase — theater and flavor for milestone events.",
+        "es": "Nuestro show a la leña — teatro y sabor para eventos especiales."
+      },
+      "features": {
+        "en": ["On-site vara fire show", "Chef-led carving", "Premium meat selection", "Desserts & drinks"],
+        "es": ["Show de vara en el lugar", "Corte dirigido por el chef", "Selección premium de carnes", "Postres y bebidas"]
+      },
+      "highlighted": true,
+      "order": 3
+    },
+    {
+      "slug": "event",
+      "name": { "en": "Event Package", "es": "Paquete Evento" },
+      "guestRange": { "en": "100+ guests", "es": "100+ invitados" },
+      "price": "custom",
+      "description": {
+        "en": "Weddings, festivals and large gatherings catered end-to-end with heart.",
+        "es": "Bodas, festivales y reuniones grandes con servicio de principio a fin."
+      },
+      "features": {
+        "en": ["Scalable menu", "Multiple fire stations", "Full-service team", "Custom menu design"],
+        "es": ["Menú escalable", "Varias estaciones de fuego", "Equipo de servicio completo", "Menú a la medida"]
+      },
+      "highlighted": false,
+      "order": 4
+    }
+  ]
+}

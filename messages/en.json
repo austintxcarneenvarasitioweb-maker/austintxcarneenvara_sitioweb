@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "siteName": "Austin TX Carne en Vara",
+    "defaultTitle": "Austin TX Carne en Vara — Fire-Grilled Venezuelan Meats",
+    "defaultDescription": "Authentic Venezuelan carne en vara cooked over live wood fire in Austin, Texas."
+  },
+  "nav": {
+    "home": "HOME",
+    "menu": "MENU",
+    "catering": "CATERING",
+    "about": "ABOUT",
+    "contact": "CONTACT",
+    "requestQuote": "Request Quote",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "mainNav": "Main navigation"
+  },
+  "language": {
+    "en": "EN",
+    "es": "ES",
+    "switchTo": "Switch language"
+  },
+  "hero": {
+    "label": "Austin TX · Carne en Vara",
+    "viewMenu": "View Menu →",
+    "catering": "Catering",
+    "scroll": "Scroll",
+    "pauseVideo": "Pause background video",
+    "playVideo": "Play background video",
+    "replayVideo": "Replay background video"
+  },
+  "footer": {
+    "brandDescription": "Authentic Venezuelan fire-grilled meats, brought to Texas with fire, smoke & family tradition.",
+    "explore": "Explore",
+    "visitUs": "Visit Us",
+    "hours": "Hours",
+    "rights": "All rights reserved.",
+    "home": "Home",
+    "menu": "Menu",
+    "catering": "Catering",
+    "about": "About",
+    "contact": "Contact",
+    "tagline": "Cooked over live fire in Austin, TX",
+    "schedule": [
+      { "day": "Monday", "time": "Closed" },
+      { "day": "Tuesday – Thursday", "time": "11:00 AM – 9:00 PM" },
+      { "day": "Friday – Saturday", "time": "11:00 AM – 11:00 PM" },
+      { "day": "Sunday", "time": "12:00 PM – 8:00 PM" }
+    ]
+  },
+  "sections": {
+    "signatureFavorites": "Signature Favorites",
+    "fullMenu": "Full Menu →",
+    "cateringEvents": "Catering & Events",
+    "requestQuote": "Request a Quote →",
+    "featuredDishes": "Featured Dishes",
+    "fullPriceList": "Full Price List",
+    "howCateringWorks": "How catering works",
+    "ourStory": "OUR STORY",
+    "ourMenu": "OUR MENU",
+    "downloadMenu": "↓ Download Full Menu",
+    "exploreMenu": "Explore the Menu →",
+    "bookCatering": "Book Catering",
+    "packagesLabel": "Packages",
+    "chooseExperience": "Choose your experience",
+    "mostPopular": "Most Popular",
+    "selectPackage": "Select →",
+    "selectedPackage": "Selected"
+  },
+  "marquee": {
+    "items": ["Tradition", "Carne en Vara", "Family", "Texas", "Venezuela", "Fire", "Smoke"]
+  },
+  "categories": {
+    "en-vara": "ON FIREWOOD",
+    "platos": "PLATES",
+    "cachapas": "CACHAPAS",
+    "adicionales": "ADDS",
+    "contornos": "SIDES",
+    "combos": "MEALS",
+    "sopa": "SOUP",
+    "bebidas": "DRINKS",
+    "postres": "DESSERT"
+  },
+  "howItWorks": {
+    "steps": {
+      "01": {
+        "title": "Tell us about your event",
+        "description": "Share your date, guest count & vision."
+      },
+      "02": {
+        "title": "We craft your menu",
+        "description": "Custom llanero spread tailored to you."
+      },
+      "03": {
+        "title": "We bring the fire",
+        "description": "Full setup, live-fire cooking, on-site."
+      },
+      "04": {
+        "title": "You celebrate",
+        "description": "Unforgettable food, zero stress."
+      }
+    }
+  },
+  "contact": {
+    "label": "Get in Touch",
+    "title": "Come find",
+    "titleEmphasis": "the fire",
+    "location": "Location",
+    "phone": "Phone",
+    "email": "Email *",
+    "hours": "Hours",
+    "sendMessage": "Send a message",
+    "fullName": "Full Name *",
+    "message": "Message *",
+    "submit": "Send Message →",
+    "sending": "Sending...",
+    "error": "Something went wrong. Please try again.",
+    "success": "Message sent. We'll get back to you soon — check your email for confirmation.",
+    "mapTitle": "Location map"
+  },
+  "quote": {
+    "label": "Request a Quote",
+    "formLabel": "Catering quote form",
+    "fullName": "Full Name *",
+    "company": "Company",
+    "phone": "Phone *",
+    "email": "Email *",
+    "eventDate": "Event Date *",
+    "guestCount": "Guest Count *",
+    "guestCountPlaceholder": "e.g. 50",
+    "location": "Event Location *",
+    "locationPlaceholder": "Venue / address",
+    "package": "Interested Package",
+    "select": "Select...",
+    "budget": "Estimated Budget",
+    "budgetPlaceholder": "e.g. $1,500",
+    "preferredContact": "Preferred Contact",
+    "contactEmail": "Email",
+    "contactPhone": "Phone",
+    "contactWhatsApp": "WhatsApp",
+    "notes": "Additional Notes",
+    "notesPlaceholder": "Dietary needs, theme, timing...",
+    "submit": "Request My Quote →",
+    "sending": "Sending...",
+    "error": "Something went wrong. Please try again.",
+    "success": "Quote request sent. We'll get back to you within 24 hours — check your email for confirmation."
+  },
+  "pages": {
+    "home": {
+      "title": "Home",
+      "description": "Authentic Venezuelan fire-grilled meats in Austin, TX. Carne en vara cooked over live wood fire."
+    },
+    "menu": {
+      "title": "Menu",
+      "description": "Explore our llanero favorites — carne en vara, cachapas, combos and more."
+    },
+    "catering": {
+      "title": "Catering",
+      "description": "We bring the live-fire Venezuelan experience to your event across Greater Austin."
+    },
+    "about": {
+      "title": "About",
+      "description": "Smoke, fire & family tradition — from the Venezuelan llanos to Austin, Texas."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Visit us in Austin or send a message — we'd love to hear from you."
+    }
+  }
+}

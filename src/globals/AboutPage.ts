@@ -9,8 +9,8 @@ export const AboutPage: GlobalConfig = {
     update: ({ req }) => req.user?.role === 'admin' || req.user?.role === 'editor',
   },
   fields: [
-    { name: 'heroTitle', type: 'text', label: 'Título', defaultValue: 'Smoke, fire & family tradition' },
-    { name: 'heroSubtitle', type: 'textarea', label: 'Subtítulo' },
+    { name: 'heroTitle', type: 'text', label: 'Título', localized: true, defaultValue: 'Smoke, fire & family tradition' },
+    { name: 'heroSubtitle', type: 'textarea', label: 'Subtítulo', localized: true },
     { name: 'heroImage', type: 'upload', relationTo: 'media', label: 'Imagen del banner' },
     {
       name: 'storySections',
@@ -18,11 +18,11 @@ export const AboutPage: GlobalConfig = {
       label: 'Secciones de historia',
       fields: [
         { name: 'number', type: 'text', required: true, label: 'Número', admin: { description: 'Ej: 01' } },
-        { name: 'title', type: 'text', required: true, label: 'Título' },
-        { name: 'body', type: 'textarea', required: true, label: 'Contenido' },
+        { name: 'title', type: 'text', required: true, label: 'Título', localized: true },
+        { name: 'body', type: 'textarea', required: true, label: 'Contenido', localized: true },
         { name: 'image', type: 'upload', relationTo: 'media', label: 'Imagen' },
       ],
     },
-    { name: 'ctaTitle', type: 'text', label: 'Título CTA', defaultValue: 'Taste the tradition' },
+    { name: 'ctaTitle', type: 'text', label: 'Título CTA', localized: true, defaultValue: 'Taste the tradition' },
   ],
 }

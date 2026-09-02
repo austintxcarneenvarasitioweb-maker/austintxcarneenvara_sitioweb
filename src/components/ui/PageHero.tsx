@@ -10,6 +10,8 @@ interface PageHeroProps {
   imageUrl?: string
   children?: React.ReactNode
   align?: 'left' | 'center'
+  minHeight?: string
+  overlay?: 'page' | 'page-blend'
 }
 
 export function PageHero({
@@ -19,15 +21,17 @@ export function PageHero({
   imageUrl,
   children,
   align = 'left',
+  minHeight = '60vh',
+  overlay = 'page',
 }: PageHeroProps) {
   const titleParts = title.split('*')
 
   return (
     <section
-      style={{ position: 'relative', minHeight: '60vh', display: 'flex', alignItems: 'flex-end', overflow: 'hidden' }}
+      style={{ position: 'relative', minHeight, display: 'flex', alignItems: 'flex-end', overflow: 'hidden' }}
       aria-label={title.replace(/\*/g, '')}
     >
-      <HeroBackdrop imageUrl={imageUrl} fallback="page" overlay="page" />
+      <HeroBackdrop imageUrl={imageUrl} fallback="page" overlay={overlay} imagePosition="unset" />
 
       <HeroReveal
         style={{

@@ -17,10 +17,11 @@ interface StorySectionProps {
 
 function StoryBlock({ section, index }: { section: StorySection; index: number }) {
   const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, amount: 0.15 })
+  const inView = useInView(ref, { once: true, amount: 0.08, margin: '0px 0px -8% 0px' })
   const reduce = useReducedMotion()
   const progress = useMotionValue(0.5)
   const imageLeft = index % 2 === 0
+  const showOnLoad = index === 0 || reduce
 
   const updateProgress = () => {
     const el = ref.current
@@ -124,8 +125,8 @@ function StoryBlock({ section, index }: { section: StorySection; index: number }
     <motion.div
       ref={ref}
       className="grid grid-cols-1 lg:grid-cols-2"
-      initial={reduce ? false : { opacity: 0, y: 40 }}
-      animate={inView || reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      initial={showOnLoad ? false : { opacity: 0, y: 40 }}
+      animate={inView || showOnLoad ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
     >
       {imageLeft ? imageCol : textCol}
@@ -136,11 +137,12 @@ function StoryBlock({ section, index }: { section: StorySection; index: number }
 
 export function StorySections({ sections }: StorySectionProps) {
   return (
-    <section aria-label="Our story" style={{ padding: '100px 24px 0' }}>
+    <section aria-label="Our story" style={{ paddingTop: '100px' }}>
       <div
         style={{
           maxWidth: '1400px',
           margin: '0 auto',
+          padding: '0 24px',
           display: 'flex',
           flexDirection: 'column',
           gap: '100px',

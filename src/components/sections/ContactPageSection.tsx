@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import type { SiteSettings } from '@/lib/mock-data'
 
 interface ContactPageSectionProps {
@@ -30,6 +31,8 @@ const infoLabel: React.CSSProperties = {
 }
 
 export function ContactPageSection({ settings }: ContactPageSectionProps) {
+  const t = useTranslations('contact')
+  const locale = useLocale()
   const [form, setForm] = useState({ fullName: '', email: '', phone: '', message: '' })
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [msg, setMsg] = useState('')
@@ -46,12 +49,12 @@ export function ContactPageSection({ settings }: ContactPageSectionProps) {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, source: 'contact' }),
+        body: JSON.stringify({ ...form, source: 'contact', locale }),
       })
       const data = (await res.json()) as { success: boolean; message: string }
       if (data.success) {
         setStatus('success')
-        setMsg(data.message)
+        setMsg(t('success'))
         setForm({ fullName: '', email: '', phone: '', message: '' })
       } else {
         setStatus('error')
@@ -59,7 +62,7 @@ export function ContactPageSection({ settings }: ContactPageSectionProps) {
       }
     } catch {
       setStatus('error')
-      setMsg('Something went wrong. Please try again.')
+      setMsg(t('error'))
     }
   }
 
@@ -70,14 +73,14 @@ export function ContactPageSection({ settings }: ContactPageSectionProps) {
     >
       <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
         <p style={{ color: '#c84914', fontSize: '11px', letterSpacing: '0.35em', textTransform: 'uppercase', fontFamily: 'var(--font-body)', fontWeight: 500, marginBottom: '16px' }}>
-          Get in Touch
+          {t('label')}
         </p>
         <h1
           id="contact-heading"
           style={{ fontFamily: 'var(--font-display)', color: '#ede0cc', fontWeight: 300, fontSize: 'clamp(2.75rem, 6vw, 4.5rem)', marginBottom: '64px', lineHeight: 1.1 }}
         >
-          Come find{' '}
-          <em style={{ color: '#c84914', fontStyle: 'italic' }}>the fire</em>
+          {t('title')}{' '}
+          <em style={{ color: '#c84914', fontStyle: 'italic' }}>{t('titleEmphasis')}</em>
         </h1>
 
         <div
@@ -90,13 +93,13 @@ export function ContactPageSection({ settings }: ContactPageSectionProps) {
               style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', marginBottom: '40px' }}
             >
               <div>
-                <p style={infoLabel}>Location</p>
+                <p style={infoLabel}>{t('location')}</p>
                 <p style={{ color: 'rgba(237,224,204,0.8)', fontSize: '0.875rem', fontFamily: 'var(--font-body)', lineHeight: 1.6 }}>
                   {settings.address}
                 </p>
               </div>
               <div>
-                <p style={infoLabel}>Phone</p>
+                <p style={infoLabel}>{t('phone')}</p>
                 <a
                   href={`tel:${settings.phone.replace(/\D/g, '')}`}
                   style={{ color: 'rgba(237,224,204,0.8)', fontSize: '0.875rem', fontFamily: 'var(--font-body)', textDecoration: 'none' }}
@@ -105,7 +108,7 @@ export function ContactPageSection({ settings }: ContactPageSectionProps) {
                 </a>
               </div>
               <div>
-                <p style={infoLabel}>Email</p>
+                <p style={infoLabel}>{t('email')}</p>
                 <a
                   href={`mailto:${settings.email}`}
                   style={{ color: 'rgba(237,224,204,0.8)', fontSize: '0.875rem', fontFamily: 'var(--font-body)', textDecoration: 'none' }}
@@ -114,7 +117,7 @@ export function ContactPageSection({ settings }: ContactPageSectionProps) {
                 </a>
               </div>
               <div>
-                <p style={infoLabel}>Hours</p>
+                <p style={infoLabel}>{t('hours')}</p>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                   {settings.hours.map((h) => (
                     <li key={h.day} style={{ color: 'rgba(237,224,204,0.7)', fontSize: '0.8125rem', fontFamily: 'var(--font-body)', marginBottom: '4px' }}>
@@ -129,7 +132,7 @@ export function ContactPageSection({ settings }: ContactPageSectionProps) {
               <div style={{ aspectRatio: '16/9', backgroundColor: '#1e0d08', border: '1px solid #3a1e10', overflow: 'hidden' }}>
                 <iframe
                   src={settings.mapEmbedUrl}
-                  title="Location map"
+                  title={t('mapTitle')}
                   style={{ width: '100%', height: '100%', border: 'none', filter: 'grayscale(100%) invert(90%)', opacity: 0.8 }}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
@@ -143,12 +146,12 @@ export function ContactPageSection({ settings }: ContactPageSectionProps) {
             <h2
               style={{ fontFamily: 'var(--font-display)', color: '#ede0cc', fontSize: '1.75rem', fontWeight: 300, marginBottom: '32px' }}
             >
-              Send a message
+              {t('sendMessage')}
             </h2>
             <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div>
                 <label htmlFor="fullName" style={{ ...infoLabel, display: 'block', marginBottom: '8px' }}>
-                  Full Name *
+                  {t('fullName')}
                 </label>
                 <input
                   id="fullName"
@@ -161,7 +164,7 @@ export function ContactPageSection({ settings }: ContactPageSectionProps) {
               </div>
               <div>
                 <label htmlFor="email" style={{ ...infoLabel, display: 'block', marginBottom: '8px' }}>
-                  Email *
+                  {t('email')}
                 </label>
                 <input
                   id="email"
@@ -175,7 +178,7 @@ export function ContactPageSection({ settings }: ContactPageSectionProps) {
               </div>
               <div>
                 <label htmlFor="phone" style={{ ...infoLabel, display: 'block', marginBottom: '8px' }}>
-                  Phone
+                  {t('phone')}
                 </label>
                 <input
                   id="phone"
@@ -188,7 +191,7 @@ export function ContactPageSection({ settings }: ContactPageSectionProps) {
               </div>
               <div>
                 <label htmlFor="message" style={{ ...infoLabel, display: 'block', marginBottom: '8px' }}>
-                  Message *
+                  {t('message')}
                 </label>
                 <textarea
                   id="message"
@@ -216,7 +219,7 @@ export function ContactPageSection({ settings }: ContactPageSectionProps) {
                 className="btn-primary"
                 style={{ width: '100%', opacity: status === 'loading' ? 0.6 : 1 }}
               >
-                {status === 'loading' ? 'Sending...' : 'Send Message →'}
+                {status === 'loading' ? t('sending') : t('submit')}
               </button>
             </form>
           </div>

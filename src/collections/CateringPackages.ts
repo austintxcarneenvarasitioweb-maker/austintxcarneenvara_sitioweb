@@ -15,17 +15,18 @@ export const CateringPackages: CollectionConfig = {
     delete: ({ req }) => req.user?.role === 'admin',
   },
   fields: [
-    { name: 'name', type: 'text', required: true, label: 'Nombre' },
-    { name: 'guestRange', type: 'text', required: true, label: 'Rango de invitados', admin: { description: 'Ej: 10-20 GUESTS' } },
+    { name: 'slug', type: 'text', required: true, unique: true, label: 'Slug', admin: { description: 'Identificador interno (no se traduce)' } },
+    { name: 'name', type: 'text', required: true, label: 'Nombre', localized: true },
+    { name: 'guestRange', type: 'text', required: true, label: 'Rango de invitados', localized: true, admin: { description: 'Ej: 10-20 GUESTS' } },
     { name: 'price', type: 'text', required: true, label: 'Precio', admin: { description: 'Ej: from $250 o custom' } },
-    { name: 'description', type: 'textarea', label: 'Descripción' },
+    { name: 'description', type: 'textarea', label: 'Descripción', localized: true },
     {
       name: 'features',
       type: 'array',
       label: 'Características',
-      fields: [{ name: 'feature', type: 'text', required: true, label: 'Característica' }],
+      fields: [{ name: 'feature', type: 'text', required: true, label: 'Característica', localized: true }],
     },
-    { name: 'highlighted', type: 'checkbox', label: 'Más popular', defaultValue: false },
+    { name: 'highlighted', type: 'checkbox', label: 'Más popular', defaultValue: false, admin: { components: { Cell: '/components/admin/BooleanCell.tsx#BooleanCell' } } },
     { name: 'order', type: 'number', label: 'Orden', defaultValue: 0 },
   ],
 }

@@ -1,3 +1,5 @@
+import catalog from '@/data/catalog.json'
+
 export interface SiteSettings {
   storeName: string
   phone: string
@@ -14,6 +16,7 @@ export interface SiteSettings {
 
 export interface Dish {
   id: string
+  slug?: string
   name: string
   tag?: string
   description: string
@@ -27,6 +30,7 @@ export interface Dish {
 
 export interface CateringPackage {
   id: string
+  slug: string
   name: string
   guestRange: string
   price: string
@@ -48,6 +52,58 @@ export interface HowItWorksStep {
   title: string
   description: string
   icon: 'people' | 'chef' | 'truck' | 'calendar'
+}
+
+type Localized = { en: string; es: string }
+
+export const IMAGE_FALLBACK: Record<string, string> = {
+  'carne-en-vara': '/images/dishes/carne-en-vara.jpg',
+  cochino: '/images/dishes/cochino.jpg',
+  'tacos-carne': '/images/dishes/tacos-carne.jpg',
+  chicharron: '/images/dishes/chicharron.jpg',
+  tostones: '/images/dishes/tostones.jpg',
+  cachapa: '/images/dishes/cachapa.jpg',
+  sopa: '/images/dishes/sopa.jpg',
+  combo: '/images/dishes/combo.jpg',
+  yuca: '/images/dishes/yuca.jpg',
+}
+
+function pick(value: Localized, locale: string) {
+  return locale === 'es' ? value.es : value.en
+}
+
+export function dishesFromCatalog(locale = 'en'): Dish[] {
+  return catalog.dishes.map((d) => ({
+    id: d.slug,
+    slug: d.slug,
+    name: pick(d.name, locale),
+    tag: pick(d.tag, locale),
+    description: pick(d.description, locale),
+    price: d.price,
+    category: d.category,
+    imageUrl: d.image ? IMAGE_FALLBACK[d.image] : undefined,
+    featured: d.featured,
+    available: true,
+    order: d.order,
+  }))
+}
+
+export function packagesFromCatalog(locale = 'en'): CateringPackage[] {
+  return catalog.packages.map((p) => ({
+    id: p.slug,
+    slug: p.slug,
+    name: pick(p.name, locale),
+    guestRange: pick(p.guestRange, locale),
+    price: p.price,
+    description: pick(p.description, locale),
+    features: locale === 'es' ? p.features.es : p.features.en,
+    highlighted: p.highlighted,
+    order: p.order,
+  }))
+}
+
+export function footerNoteFromCatalog(locale = 'en') {
+  return pick(catalog.footerNote, locale)
 }
 
 export const mockSettings: SiteSettings = {
@@ -86,7 +142,7 @@ export const mockMenuPage = {
   heroSubtitle: 'Every plate begins with wood, fire, and time. Explore our llanero favorites.',
   heroImageUrl: '/images/sections/menu-hero.jpg',
   menuPdfUrl: '#',
-  footerNote: 'Available: Guasacaca · Nata · Salsas Picantes',
+  footerNote: 'Available: Avocado/Cilantro Sauce · Sour Cream · Hot Sauces',
 }
 
 export const mockCateringPage = {
@@ -107,171 +163,8 @@ export const mockAboutPage = {
   ctaTitle: 'Taste the tradition',
 }
 
-export const mockDishes: Dish[] = [
-  {
-    id: '1',
-    name: 'Carne en Vara',
-    tag: 'SIGNATURE · ½ LB',
-    description: 'Half a pound of beef slow-cooked on the vara over live wood fire.',
-    price: '$17.99',
-    category: 'en-vara',
-    imageUrl: '/images/dishes/carne-en-vara.jpg',
-    featured: true,
-    available: true,
-    order: 1,
-  },
-  {
-    id: '2',
-    name: 'Cochino en Vara',
-    tag: 'PORK BELLY · ½ LB',
-    description: 'Fire-roasted pork belly, crackling skin, melting center.',
-    price: '$14.99',
-    category: 'en-vara',
-    imageUrl: '/images/dishes/cochino.jpg',
-    featured: true,
-    available: true,
-    order: 2,
-  },
-  {
-    id: '3',
-    name: 'Tacos de Carne en Vara',
-    tag: '3 TACOS',
-    description: 'Three tacos loaded with our fire-grilled carne en vara.',
-    price: '$12.99',
-    category: 'platos',
-    imageUrl: '/images/dishes/tacos-carne.jpg',
-    featured: true,
-    available: true,
-    order: 3,
-  },
-  {
-    id: '4',
-    name: 'Griddled Sweet Corn',
-    tag: 'CONTORNO',
-    description: 'Charred sweet corn with butter, salt, and wood-fire smoke.',
-    price: '$5.99',
-    category: 'contornos',
-    imageUrl: '/images/dishes/sweet-corn.jpg',
-    featured: true,
-    available: true,
-    order: 4,
-  },
-  {
-    id: '5',
-    name: 'Cachapa con Queso de Mano',
-    tag: 'CACHAPA',
-    description: 'Traditional sweet corn pancake with fresh queso de mano.',
-    price: '$12.99',
-    category: 'cachapas',
-    imageUrl: '/images/dishes/cachapa.jpg',
-    featured: true,
-    available: true,
-    order: 5,
-  },
-  {
-    id: '6',
-    name: 'Picadillo Llanero',
-    tag: 'SOPA',
-    description: 'Hearty llanero-style soup with shredded beef and vegetables.',
-    price: '$15.99',
-    category: 'sopa',
-    imageUrl: '/images/dishes/sopa.jpg',
-    featured: true,
-    available: true,
-    order: 6,
-  },
-  {
-    id: '7',
-    name: 'Tacos de Chicharrón',
-    tag: '3 TACOS',
-    description: 'Three tacos with crispy chicharrón and guasacaca.',
-    price: '$12.99',
-    category: 'platos',
-    imageUrl: '/images/dishes/chicharron.jpg',
-    featured: false,
-    available: true,
-    order: 7,
-  },
-  {
-    id: '8',
-    name: 'Tostones de Carne en Vara',
-    tag: '3 TOSTONES',
-    description: 'Crispy tostones topped with fire-grilled carne en vara.',
-    price: '$12.99',
-    category: 'platos',
-    imageUrl: '/images/dishes/tostones.jpg',
-    featured: false,
-    available: true,
-    order: 8,
-  },
-  {
-    id: '9',
-    name: 'Combo Para 1',
-    tag: 'COMBO',
-    description: '¼ lb carne, ¼ lb cochino, chorizo, yuca, plátano, ensalada + bebida.',
-    price: '$27.00',
-    category: 'combos',
-    imageUrl: '/images/dishes/combo.jpg',
-    featured: false,
-    available: true,
-    order: 9,
-  },
-  {
-    id: '10',
-    name: 'Yuca Frita',
-    tag: 'CONTORNO',
-    description: 'Golden fried yuca served with nata and guasacaca.',
-    price: '$5.99',
-    category: 'contornos',
-    imageUrl: '/images/dishes/yuca.jpg',
-    featured: false,
-    available: true,
-    order: 10,
-  },
-]
-
-export const mockCateringPackages: CateringPackage[] = [
-  {
-    id: '1',
-    name: 'Family Feast',
-    guestRange: '10-20 GUESTS',
-    price: 'from $250',
-    description: 'An intimate spread of our fire-grilled favorites for the family table.',
-    features: ['Carne & cochino en vara', 'Chorizo & sides', 'Cachapas', 'Guasacaca, nata & salsas'],
-    highlighted: false,
-    order: 1,
-  },
-  {
-    id: '2',
-    name: 'Corporate Package',
-    guestRange: '30-80 GUESTS',
-    price: 'from $900',
-    description: 'Impress the office with a full llanero grilling experience and clean service.',
-    features: ['Live-fire station', 'Assorted meats & sides', 'Vegetarian options', 'Full setup & staff'],
-    highlighted: false,
-    order: 2,
-  },
-  {
-    id: '3',
-    name: 'Premium Fire Experience',
-    guestRange: '50-150 GUESTS',
-    price: 'custom',
-    description: 'Our signature open-fire showcase — theater and flavor for milestone events.',
-    features: ['On-site vara fire show', 'Chef-led carving', 'Premium meat selection', 'Desserts & drinks'],
-    highlighted: true,
-    order: 3,
-  },
-  {
-    id: '4',
-    name: 'Event Package',
-    guestRange: '100+ GUESTS',
-    price: 'custom',
-    description: 'Weddings, festivals & large gatherings catered end-to-end with heart.',
-    features: ['Scalable menu', 'Multiple fire stations', 'Full-service team', 'Custom menu design'],
-    highlighted: false,
-    order: 4,
-  },
-]
+export const mockDishes = dishesFromCatalog('en')
+export const mockCateringPackages = packagesFromCatalog('en')
 
 export const mockStorySections: StorySection[] = [
   {
@@ -327,16 +220,17 @@ export const mockHowItWorks: HowItWorksStep[] = [
   },
 ]
 
+/** Order matches the printed menu columns (left → right). */
 export const CATEGORY_LABELS: Record<string, string> = {
   'en-vara': 'EN VARA',
-  cachapas: 'CACHAPAS',
-  sopa: 'SOPA',
   platos: 'PLATOS',
-  combos: 'COMBOS',
+  cachapas: 'CACHAPAS',
   adicionales: 'ADICIONALES',
   contornos: 'CONTORNOS',
-  postres: 'POSTRES',
+  combos: 'COMBOS',
+  sopa: 'SOPA',
   bebidas: 'BEBIDAS',
+  postres: 'POSTRES',
 }
 
 export const MARQUEE_ITEMS = [

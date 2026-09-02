@@ -1,5 +1,5 @@
+import { getTranslations } from 'next-intl/server'
 import { PageHero } from '@/components/ui/PageHero'
-import { MarqueeTicker } from '@/components/ui/MarqueeTicker'
 
 interface AboutHeroProps {
   title?: string
@@ -7,15 +7,21 @@ interface AboutHeroProps {
   imageUrl?: string
 }
 
-export function AboutHero({
+export async function AboutHero({
   title = 'Smoke, fire & *family tradition*',
   subtitle,
   imageUrl,
 }: AboutHeroProps) {
+  const t = await getTranslations('sections')
+
   return (
-    <>
-      <PageHero label="OUR STORY" title={title} subtitle={subtitle} imageUrl={imageUrl} />
-      <MarqueeTicker />
-    </>
+    <PageHero
+      label={t('ourStory')}
+      title={title}
+      subtitle={subtitle}
+      imageUrl={imageUrl}
+      minHeight="75vh"
+      overlay="page-blend"
+    />
   )
 }

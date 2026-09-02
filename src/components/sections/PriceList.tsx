@@ -1,8 +1,20 @@
 'use client'
 
 import type { Dish } from '@/lib/mock-data'
-import { CATEGORY_LABELS } from '@/lib/mock-data'
 import { StaggerItem, StaggerReveal } from '@/components/motion/StaggerReveal'
+import { useTranslations } from 'next-intl'
+
+const CATEGORY_KEYS = [
+  'en-vara',
+  'platos',
+  'cachapas',
+  'adicionales',
+  'contornos',
+  'combos',
+  'sopa',
+  'bebidas',
+  'postres',
+] as const
 
 interface PriceListProps {
   dishes: Dish[]
@@ -10,12 +22,16 @@ interface PriceListProps {
 }
 
 export function PriceList({ dishes, footerNote }: PriceListProps) {
-  const categories = Object.keys(CATEGORY_LABELS)
+  const t = useTranslations('sections')
+  const tCategories = useTranslations('categories')
+  const categories = [...CATEGORY_KEYS]
   const grouped = categories
     .map((cat) => ({
       key: cat,
-      label: CATEGORY_LABELS[cat] as string,
-      items: dishes.filter((d) => d.category === cat && d.available),
+      label: tCategories(cat),
+      items: dishes
+        .filter((d) => d.category === cat && d.available)
+        .sort((a, b) => a.order - b.order),
     }))
     .filter((g) => g.items.length > 0)
 
@@ -24,13 +40,33 @@ export function PriceList({ dishes, footerNote }: PriceListProps) {
   const rightCol = grouped.slice(midpoint)
 
   const renderCategory = (group: (typeof grouped)[0]) => (
-    <div key={group.key} style={{ marginBottom: '40px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-        <svg width="12" height="15" viewBox="0 0 14 18" fill="#c84914">
-          <path d="M7 0C7 0 10.5 4 10.5 7.5C10.5 9.5 9.5 11 9.5 11C9.5 11 10.5 10 10.5 8.5C10.5 8.5 12.5 10.5 12.5 13C12.5 15.5 10.2 18 7 18C3.8 18 1.5 15.5 1.5 13C1.5 10.5 3.5 8.5 3.5 8.5C3.5 10 4.5 11 4.5 11C4.5 11 3.5 9.5 3.5 7.5C3.5 4 7 0 7 0Z" />
+    <div key={group.key} style={{ marginBottom: '2.75rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          style={{ color: '#ff5500', flexShrink: 0 }}
+        >
+          <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
         </svg>
         <h3
-          style={{ fontFamily: 'var(--font-display)', color: '#b8975a', fontSize: '0.9375rem', letterSpacing: '0.25em', textTransform: 'uppercase', fontWeight: 300 }}
+          style={{
+            fontFamily: '"Source Sans 3", system-ui, sans-serif',
+            color: '#b8975a',
+            fontSize: '0.7rem',
+            letterSpacing: '0.28em',
+            textTransform: 'uppercase',
+            fontWeight: 500,
+            margin: 0,
+          }}
         >
           {group.label}
         </h3>
@@ -39,21 +75,45 @@ export function PriceList({ dishes, footerNote }: PriceListProps) {
         {group.items.map((item) => (
           <li
             key={item.id}
-            style={{ display: 'flex', alignItems: 'flex-end', fontSize: '0.875rem', marginBottom: '12px' }}
+            style={{
+              display: 'flex',
+              alignItems: 'baseline',
+              gap: 0,
+              marginBottom: '0.85rem',
+              fontFamily: '"Source Sans 3", system-ui, sans-serif',
+              fontSize: '0.9375rem',
+              lineHeight: 1.35,
+            }}
           >
-            <span style={{ color: 'rgba(237,224,204,0.9)', flexShrink: 0, maxWidth: '70%', fontFamily: 'var(--font-body)' }}>
+            <span
+              style={{
+                color: 'rgba(237, 224, 204, 0.92)',
+                flexShrink: 1,
+                fontWeight: 400,
+              }}
+            >
               {item.name}
-              {item.description && (
-                <span style={{ display: 'block', color: '#7a6558', fontSize: '12px', marginTop: '2px', fontWeight: 300 }}>
-                  {item.description}
-                </span>
-              )}
             </span>
             <span
-              style={{ flex: 1, borderBottom: '1px dotted rgba(122,101,88,0.4)', margin: '0 12px 4px', minWidth: '16px' }}
+              className="dotted-leader"
+              style={{
+                flex: 1,
+                borderBottom: '1px dotted rgba(122, 101, 88, 0.55)',
+                margin: '0 0.75rem',
+                minWidth: '1rem',
+                alignSelf: 'flex-end',
+                marginBottom: '0.35rem',
+              }}
               aria-hidden="true"
             />
-            <span style={{ color: '#ede0cc', flexShrink: 0, fontFamily: 'var(--font-body)', fontVariantNumeric: 'tabular-nums' }}>
+            <span
+              style={{
+                color: '#ede0cc',
+                flexShrink: 0,
+                fontVariantNumeric: 'tabular-nums',
+                fontWeight: 400,
+              }}
+            >
               {item.price}
             </span>
           </li>
@@ -64,29 +124,37 @@ export function PriceList({ dishes, footerNote }: PriceListProps) {
 
   return (
     <section
-      style={{ backgroundColor: '#1a0e10', padding: '64px 0 80px', borderTop: '1px solid #3a1e10' }}
+      style={{
+        backgroundColor: '#140a07',
+        padding: '4.5rem 0 5.5rem',
+        borderTop: '1px solid #3a1e10',
+      }}
       aria-labelledby="price-list-heading"
     >
       <StaggerReveal
         delay={0.1}
         stagger={0.12}
         inView
-        style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 24px' }}
+        style={{ maxWidth: '1152px', margin: '0 auto', padding: '0 24px' }}
       >
         <StaggerItem>
           <h2
             id="price-list-heading"
-            style={{ fontFamily: 'var(--font-display)', color: '#ede0cc', fontWeight: 300, fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)', marginBottom: '48px' }}
+            style={{
+              fontFamily: '"Cormorant Garamond", Georgia, serif',
+              color: '#b8975a',
+              fontWeight: 400,
+              fontSize: 'clamp(2rem, 4vw, 2.75rem)',
+              marginBottom: '2.75rem',
+              letterSpacing: '0.01em',
+            }}
           >
-            Full Price List
+            {t('fullPriceList')}
           </h2>
         </StaggerItem>
 
         <StaggerItem>
-          <div
-            className="grid grid-cols-1 md:grid-cols-2"
-            style={{ gap: '0 64px' }}
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '0 4.5rem' }}>
             <div>{leftCol.map(renderCategory)}</div>
             <div>{rightCol.map(renderCategory)}</div>
           </div>
@@ -95,7 +163,14 @@ export function PriceList({ dishes, footerNote }: PriceListProps) {
         {footerNote && (
           <StaggerItem>
             <p
-              style={{ textAlign: 'center', color: '#7a6558', fontSize: '0.875rem', marginTop: '48px', letterSpacing: '0.1em', fontFamily: 'var(--font-body)' }}
+              style={{
+                textAlign: 'center',
+                color: '#7a6558',
+                fontSize: '0.8125rem',
+                marginTop: '2.5rem',
+                letterSpacing: '0.12em',
+                fontFamily: '"Source Sans 3", system-ui, sans-serif',
+              }}
             >
               {footerNote}
             </p>

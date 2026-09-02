@@ -1,13 +1,17 @@
 import type { MetadataRoute } from 'next'
+import { routing } from '@/i18n/routing'
+
+const paths = ['', '/menu', '/catering', '/about', '/contact'] as const
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3001'
 
-  return [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
-    { url: `${baseUrl}/menu`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${baseUrl}/catering`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/contact`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-  ]
+  return routing.locales.flatMap((locale) =>
+    paths.map((path) => ({
+      url: `${baseUrl}/${locale}${path}`,
+      lastModified: new Date(),
+      changeFrequency: path === '' || path === '/menu' ? 'weekly' : 'monthly',
+      priority: path === '' ? 1 : path === '/menu' || path === '/catering' ? 0.9 : 0.8,
+    })),
+  )
 }

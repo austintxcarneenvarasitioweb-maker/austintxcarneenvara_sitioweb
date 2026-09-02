@@ -92,7 +92,7 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'es') | ('en' | 'es')[];
   globals: {
     settings: Setting;
     'home-page': HomePage;
@@ -107,7 +107,7 @@ export interface Config {
     'catering-page': CateringPageSelect<false> | CateringPageSelect<true>;
     'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
   };
-  locale: null;
+  locale: 'en' | 'es';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -248,6 +248,7 @@ export interface Media {
  */
 export interface Dish {
   id: string;
+  slug: string;
   name: string;
   /**
    * Ej: SIGNATURE · ½ LB
@@ -272,6 +273,10 @@ export interface Dish {
  */
 export interface CateringPackage {
   id: string;
+  /**
+   * Identificador interno (no se traduce)
+   */
+  slug: string;
   name: string;
   /**
    * Ej: 10-20 GUESTS
@@ -294,6 +299,8 @@ export interface CateringPackage {
   createdAt: string;
 }
 /**
+ * Solicitudes enviadas desde el sitio. Solo lectura.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "quote-requests".
  */
@@ -309,7 +316,7 @@ export interface QuoteRequest {
   package?: string | null;
   budget?: string | null;
   notes?: string | null;
-  preferredContact?: ('email' | 'phone') | null;
+  preferredContact?: ('email' | 'phone' | 'whatsapp') | null;
   source?: ('contact' | 'catering') | null;
   updatedAt: string;
   createdAt: string;
@@ -465,6 +472,7 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "dishes_select".
  */
 export interface DishesSelect<T extends boolean = true> {
+  slug?: T;
   name?: T;
   tag?: T;
   description?: T;
@@ -482,6 +490,7 @@ export interface DishesSelect<T extends boolean = true> {
  * via the `definition` "catering-packages_select".
  */
 export interface CateringPackagesSelect<T extends boolean = true> {
+  slug?: T;
   name?: T;
   guestRange?: T;
   price?: T;
@@ -567,9 +576,18 @@ export interface Setting {
   phone?: string | null;
   email?: string | null;
   address?: string | null;
+  /**
+   * Se muestra en el footer y en Contacto. Cambia de idioma (EN / ES) para traducir día y horario.
+   */
   hours?:
     | {
+        /**
+         * Ej: Monday / Lunes, o Tuesday – Thursday
+         */
         day: string;
+        /**
+         * Ej: 11:00 AM – 9:00 PM o Closed / Cerrado
+         */
         time: string;
         id?: string | null;
       }[]
@@ -592,6 +610,10 @@ export interface HomePage {
   heroTitle?: string | null;
   heroSubtitle?: string | null;
   heroImage?: (string | null) | Media;
+  /**
+   * MP4 o WebM. Ideal 1920×1080 o más, 10–20s, sin pasar por WhatsApp (eso lo deja en ~480p y se ve pixelado a pantalla completa). Se reproduce una vez, se apaga al fondo oscuro y luego aparece la imagen del hero.
+   */
+  heroVideo?: (string | null) | Media;
   signatureTitle?: string | null;
   cateringTitle?: string | null;
   cateringDescription?: string | null;
@@ -608,7 +630,10 @@ export interface MenuPage {
   heroTitle?: string | null;
   heroSubtitle?: string | null;
   heroImage?: (string | null) | Media;
-  menuPdfUrl?: string | null;
+  /**
+   * Sube un PDF distinto por idioma (EN / ES).
+   */
+  menuPdf?: (string | null) | Media;
   footerNote?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -686,6 +711,7 @@ export interface HomePageSelect<T extends boolean = true> {
   heroTitle?: T;
   heroSubtitle?: T;
   heroImage?: T;
+  heroVideo?: T;
   signatureTitle?: T;
   cateringTitle?: T;
   cateringDescription?: T;
@@ -702,7 +728,7 @@ export interface MenuPageSelect<T extends boolean = true> {
   heroTitle?: T;
   heroSubtitle?: T;
   heroImage?: T;
-  menuPdfUrl?: T;
+  menuPdf?: T;
   footerNote?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -1,18 +1,23 @@
-import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
+import { BrandLogo, BrandWordmark } from '@/components/brand/BrandLogo'
 import { FlameIcon } from '@/components/ui/FlameIcon'
+import { Link } from '@/i18n/navigation'
 import type { SiteSettings } from '@/lib/mock-data'
 
 interface FooterProps {
   settings: SiteSettings
+  locale: string
 }
 
-export function Footer({ settings }: FooterProps) {
+export async function Footer({ settings, locale }: FooterProps) {
+  const t = await getTranslations({ locale, namespace: 'footer' })
+
   const exploreLinks = [
-    { label: 'Home', href: '/' },
-    { label: 'Menu', href: '/menu' },
-    { label: 'Catering', href: '/catering' },
-    { label: 'About', href: '/about' },
-    { label: 'Contact', href: '/contact' },
+    { label: t('home'), href: '/' as const },
+    { label: t('menu'), href: '/menu' as const },
+    { label: t('catering'), href: '/catering' as const },
+    { label: t('about'), href: '/about' as const },
+    { label: t('contact'), href: '/contact' as const },
   ]
 
   const headingStyle: React.CSSProperties = {
@@ -34,34 +39,22 @@ export function Footer({ settings }: FooterProps) {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
         style={{ maxWidth: '1400px', margin: '0 auto', padding: '56px 24px', gap: '40px' }}
       >
-        {/* Brand */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-            <div
-              style={{ width: '40px', height: '40px', borderRadius: '50%', border: '1px solid rgba(184,151,90,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#b8975a' }}
-            >
-              <FlameIcon />
-            </div>
-            <div>
-              <p style={{ fontFamily: 'var(--font-display)', color: '#ede0cc', fontSize: '1.1rem' }}>Austin TX</p>
-              <p style={{ color: '#7a6558', fontSize: '10px', letterSpacing: '0.25em', textTransform: 'uppercase', fontFamily: 'var(--font-body)' }}>Carne en Vara</p>
-            </div>
+            <BrandLogo size={40} alt="" />
+            <BrandWordmark />
           </div>
           <p style={{ color: 'rgba(237,224,204,0.5)', fontSize: '0.875rem', lineHeight: 1.7, fontFamily: 'var(--font-body)' }}>
-            Authentic Venezuelan fire-grilled meats, brought to Texas with fire, smoke &amp; family tradition.
+            {t('brandDescription')}
           </p>
         </div>
 
-        {/* Explore */}
         <div>
-          <h4 style={headingStyle}>Explore</h4>
+          <h4 style={headingStyle}>{t('explore')}</h4>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             {exploreLinks.map((link) => (
               <li key={link.href} style={{ marginBottom: '8px' }}>
-                <Link
-                  href={link.href}
-                  style={{ color: 'rgba(237,224,204,0.65)', fontSize: '0.9375rem', textDecoration: 'none', fontFamily: 'var(--font-body)', transition: 'color 0.2s' }}
-                >
+                <Link href={link.href} className="footer-link">
                   {link.label}
                 </Link>
               </li>
@@ -69,40 +62,38 @@ export function Footer({ settings }: FooterProps) {
           </ul>
         </div>
 
-        {/* Visit Us */}
         <div>
           <h4 style={headingStyle}>
             <svg width="12" height="16" viewBox="0 0 12 16" fill="none" stroke="currentColor" strokeWidth="1.5">
               <circle cx="6" cy="5.5" r="2.5" />
               <path d="M6 0C3.24 0 1 2.24 1 5c0 4 5 11 5 11s5-7 5-11c0-2.76-2.24-5-5-5z" />
             </svg>
-            Visit Us
+            {t('visitUs')}
           </h4>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             <li style={{ color: 'rgba(237,224,204,0.65)', fontSize: '0.875rem', marginBottom: '10px', fontFamily: 'var(--font-body)' }}>
               {settings.address}
             </li>
             <li style={{ marginBottom: '10px' }}>
-              <a href={`tel:${settings.phone.replace(/\D/g, '')}`} style={{ color: 'rgba(237,224,204,0.65)', fontSize: '0.875rem', textDecoration: 'none', fontFamily: 'var(--font-body)' }}>
+              <a href={`tel:${settings.phone.replace(/\D/g, '')}`} className="footer-link">
                 {settings.phone}
               </a>
             </li>
             <li>
-              <a href={`mailto:${settings.email}`} style={{ color: 'rgba(237,224,204,0.65)', fontSize: '0.875rem', textDecoration: 'none', fontFamily: 'var(--font-body)' }}>
+              <a href={`mailto:${settings.email}`} className="footer-link">
                 {settings.email}
               </a>
             </li>
           </ul>
         </div>
 
-        {/* Hours */}
         <div>
           <h4 style={headingStyle}>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
               <circle cx="7" cy="7" r="6" />
               <path d="M7 4v3.5l2 2" />
             </svg>
-            Hours
+            {t('hours')}
           </h4>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, marginBottom: '24px' }}>
             {settings.hours.map((h) => (
@@ -117,17 +108,17 @@ export function Footer({ settings }: FooterProps) {
           </ul>
           <div style={{ display: 'flex', gap: '16px' }}>
             {settings.instagram && (
-              <a href={settings.instagram} target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(237,224,204,0.5)', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', textDecoration: 'none', fontFamily: 'var(--font-body)', transition: 'color 0.2s' }}>
+              <a href={settings.instagram} target="_blank" rel="noopener noreferrer" className="footer-link-sm">
                 Instagram
               </a>
             )}
             {settings.facebook && (
-              <a href={settings.facebook} target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(237,224,204,0.5)', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', textDecoration: 'none', fontFamily: 'var(--font-body)', transition: 'color 0.2s' }}>
+              <a href={settings.facebook} target="_blank" rel="noopener noreferrer" className="footer-link-sm">
                 Facebook
               </a>
             )}
             {settings.tiktok && (
-              <a href={settings.tiktok} target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(237,224,204,0.5)', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', textDecoration: 'none', fontFamily: 'var(--font-body)', transition: 'color 0.2s' }}>
+              <a href={settings.tiktok} target="_blank" rel="noopener noreferrer" className="footer-link-sm">
                 TikTok
               </a>
             )}
@@ -140,11 +131,11 @@ export function Footer({ settings }: FooterProps) {
           style={{ maxWidth: '1400px', margin: '0 auto', padding: '20px 24px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}
         >
           <p style={{ color: '#7a6558', fontSize: '12px', fontFamily: 'var(--font-body)' }}>
-            © {new Date().getFullYear()} {settings.storeName}. All rights reserved.
+            © {new Date().getFullYear()} {settings.storeName}. {t('rights')}
           </p>
           <p style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#7a6558', fontSize: '12px', fontFamily: 'var(--font-body)' }}>
             <FlameIcon style={{ color: '#c84914' }} />
-            {settings.tagline}
+            {settings.tagline || t('tagline')}
           </p>
         </div>
       </div>

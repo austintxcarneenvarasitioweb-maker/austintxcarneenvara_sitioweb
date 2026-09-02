@@ -2,8 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
-  upload: true,
-  labels: { singular: 'Imagen', plural: 'Imágenes' },
+  upload: {
+    mimeTypes: ['image/*', 'video/mp4', 'video/webm', 'video/quicktime', 'application/pdf'],
+  },
+  labels: { singular: 'Archivo', plural: 'Archivos' },
   admin: {
     group: 'Contenido',
     defaultColumns: ['filename', 'alt', 'updatedAt'],

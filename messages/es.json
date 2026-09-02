@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "siteName": "Austin TX Carne en Vara",
+    "defaultTitle": "Austin TX Carne en Vara — Carnes venezolanas a la leña",
+    "defaultDescription": "Auténtica carne en vara venezolana cocinada a la leña en Austin, Texas."
+  },
+  "nav": {
+    "home": "INICIO",
+    "menu": "MENÚ",
+    "catering": "CATERING",
+    "about": "NOSOTROS",
+    "contact": "CONTACTO",
+    "requestQuote": "Solicitar Cotización",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "mainNav": "Navegación principal"
+  },
+  "language": {
+    "en": "EN",
+    "es": "ES",
+    "switchTo": "Cambiar idioma"
+  },
+  "hero": {
+    "label": "Austin TX · Carne en Vara",
+    "viewMenu": "Ver Menú →",
+    "catering": "Catering",
+    "scroll": "Desplazar",
+    "pauseVideo": "Pausar video de fondo",
+    "playVideo": "Reproducir video de fondo",
+    "replayVideo": "Volver a reproducir el video"
+  },
+  "footer": {
+    "brandDescription": "Auténticas carnes venezolanas a la leña, traídas a Texas con fuego, humo y tradición familiar.",
+    "explore": "Explorar",
+    "visitUs": "Visítanos",
+    "hours": "Horario",
+    "rights": "Todos los derechos reservados.",
+    "home": "Inicio",
+    "menu": "Menú",
+    "catering": "Catering",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "tagline": "Cocinado a la leña en Austin, TX",
+    "schedule": [
+      { "day": "Lunes", "time": "Cerrado" },
+      { "day": "Martes – Jueves", "time": "11:00 AM – 9:00 PM" },
+      { "day": "Viernes – Sábado", "time": "11:00 AM – 11:00 PM" },
+      { "day": "Domingo", "time": "12:00 PM – 8:00 PM" }
+    ]
+  },
+  "sections": {
+    "signatureFavorites": "Favoritos de la Casa",
+    "fullMenu": "Menú Completo →",
+    "cateringEvents": "Catering y Eventos",
+    "requestQuote": "Solicitar Cotización →",
+    "featuredDishes": "Platos Destacados",
+    "fullPriceList": "Lista de Precios",
+    "howCateringWorks": "Cómo funciona el catering",
+    "ourStory": "NUESTRA HISTORIA",
+    "ourMenu": "NUESTRO MENÚ",
+    "downloadMenu": "↓ Descargar Menú Completo",
+    "exploreMenu": "Explorar el Menú →",
+    "bookCatering": "Reservar Catering",
+    "packagesLabel": "Paquetes",
+    "chooseExperience": "Elige tu experiencia",
+    "mostPopular": "Más popular",
+    "selectPackage": "Seleccionar →",
+    "selectedPackage": "Seleccionado"
+  },
+  "marquee": {
+    "items": ["Tradición", "Carne en Vara", "Familia", "Texas", "Venezuela", "Fuego", "Humo"]
+  },
+  "categories": {
+    "en-vara": "EN VARA",
+    "platos": "PLATOS",
+    "cachapas": "CACHAPAS",
+    "adicionales": "ADICIONALES",
+    "contornos": "CONTORNOS",
+    "combos": "COMBOS",
+    "sopa": "SOPA",
+    "bebidas": "BEBIDAS",
+    "postres": "POSTRES"
+  },
+  "howItWorks": {
+    "steps": {
+      "01": {
+        "title": "Cuéntanos sobre tu evento",
+        "description": "Comparte la fecha, número de invitados y tu visión."
+      },
+      "02": {
+        "title": "Diseñamos tu menú",
+        "description": "Un menú llanero personalizado para ti."
+      },
+      "03": {
+        "title": "Llevamos el fuego",
+        "description": "Montaje completo, cocina a la leña en el lugar."
+      },
+      "04": {
+        "title": "Tú celebras",
+        "description": "Comida inolvidable, cero estrés."
+      }
+    }
+  },
+  "contact": {
+    "label": "Contáctanos",
+    "title": "Ven a encontrar",
+    "titleEmphasis": "el fuego",
+    "location": "Ubicación",
+    "phone": "Teléfono",
+    "email": "Correo *",
+    "hours": "Horario",
+    "sendMessage": "Enviar un mensaje",
+    "fullName": "Nombre completo *",
+    "message": "Mensaje *",
+    "submit": "Enviar Mensaje →",
+    "sending": "Enviando...",
+    "error": "Algo salió mal. Por favor intenta de nuevo.",
+    "success": "Mensaje enviado. Te escribimos pronto — revisa tu correo para la confirmación.",
+    "mapTitle": "Mapa de ubicación"
+  },
+  "quote": {
+    "label": "Solicitar Cotización",
+    "formLabel": "Formulario de cotización de catering",
+    "fullName": "Nombre completo *",
+    "company": "Empresa",
+    "phone": "Teléfono *",
+    "email": "Correo *",
+    "eventDate": "Fecha del evento *",
+    "guestCount": "Número de invitados *",
+    "guestCountPlaceholder": "ej. 50",
+    "location": "Ubicación del evento *",
+    "locationPlaceholder": "Lugar / dirección",
+    "package": "Paquete de interés",
+    "select": "Seleccionar...",
+    "budget": "Presupuesto estimado",
+    "budgetPlaceholder": "ej. $1,500",
+    "preferredContact": "Contacto preferido",
+    "contactEmail": "Correo",
+    "contactPhone": "Teléfono",
+    "contactWhatsApp": "WhatsApp",
+    "notes": "Notas adicionales",
+    "notesPlaceholder": "Restricciones alimentarias, tema, horario...",
+    "submit": "Solicitar Cotización →",
+    "sending": "Enviando...",
+    "error": "Algo salió mal. Por favor intenta de nuevo.",
+    "success": "Solicitud enviada. Te contactamos en 24 horas — revisa tu correo para la confirmación."
+  },
+  "pages": {
+    "home": {
+      "title": "Inicio",
+      "description": "Auténticas carnes venezolanas a la leña en Austin, TX. Carne en vara cocinada a fuego vivo."
+    },
+    "menu": {
+      "title": "Menú",
+      "description": "Explora nuestros favoritos llaneros — carne en vara, cachapas, combos y más."
+    },
+    "catering": {
+      "title": "Catering",
+      "description": "Llevamos la experiencia venezolana a la leña a tu evento en el área de Austin."
+    },
+    "about": {
+      "title": "Nosotros",
+      "description": "Humo, fuego y tradición familiar — de los llanos venezolanos a Austin, Texas."
+    },
+    "contact": {
+      "title": "Contacto",
+      "description": "Visítanos en Austin o envíanos un mensaje — nos encantaría saber de ti."
+    }
+  }
+}

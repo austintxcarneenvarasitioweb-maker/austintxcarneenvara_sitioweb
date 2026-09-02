@@ -9,10 +9,10 @@ export const CateringPage: GlobalConfig = {
     update: ({ req }) => req.user?.role === 'admin' || req.user?.role === 'editor',
   },
   fields: [
-    { name: 'heroTitle', type: 'text', label: 'Título', defaultValue: 'We bring the fire to you' },
-    { name: 'heroSubtitle', type: 'textarea', label: 'Subtítulo' },
+    { name: 'heroTitle', type: 'text', label: 'Título', localized: true, defaultValue: 'We bring the fire to you' },
+    { name: 'heroSubtitle', type: 'textarea', label: 'Subtítulo', localized: true },
     { name: 'heroImage', type: 'upload', relationTo: 'media', label: 'Imagen del banner' },
-    { name: 'quoteTitle', type: 'text', label: 'Título formulario', defaultValue: "Let's plan your feast" },
-    { name: 'quoteDescription', type: 'textarea', label: 'Descripción formulario' },
+    { name: 'quoteTitle', type: 'text', label: 'Título formulario', localized: true, defaultValue: "Let's plan your feast" },
+    { name: 'quoteDescription', type: 'textarea', label: 'Descripción formulario', localized: true },
   ],
 }

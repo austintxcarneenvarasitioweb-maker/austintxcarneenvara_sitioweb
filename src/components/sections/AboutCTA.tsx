@@ -1,10 +1,13 @@
-import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
+import { Link } from '@/i18n/navigation'
 
 interface AboutCTAProps {
   title?: string
 }
 
-export function AboutCTA({ title = 'Taste the tradition' }: AboutCTAProps) {
+export async function AboutCTA({ title = 'Taste the tradition' }: AboutCTAProps) {
+  const t = await getTranslations('sections')
+
   return (
     <section
       style={{ backgroundColor: '#1a0e10', padding: '96px 24px', textAlign: 'center', borderTop: '1px solid #3a1e10' }}
@@ -19,10 +22,10 @@ export function AboutCTA({ title = 'Taste the tradition' }: AboutCTAProps) {
         </h2>
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
           <Link href="/menu" className="btn-primary">
-            Explore the Menu →
+            {t('exploreMenu')}
           </Link>
           <Link href="/catering#quote" className="btn-outline">
-            Book Catering
+            {t('bookCatering')}
           </Link>
         </div>
       </div>

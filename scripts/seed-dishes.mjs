@@ -1,11 +1,11 @@
 /**
- * Seed 10 demo dishes into MongoDB (Payload `dishes` collection).
- * Site UI also uses /public/images via mock-data for instant preview.
- *
+ * Seed bilingual dishes + catering packages into MongoDB.
  * Usage: node scripts/seed-dishes.mjs
  */
 import { readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
+import { fileURLToPath } from 'node:url'
+import path from 'node:path'
 
 const require = createRequire(import.meta.url)
 const mongoose = require(require.resolve('mongoose', { paths: [require.resolve('@payloadcms/db-mongodb')] }))
@@ -30,130 +30,97 @@ if (!uri) {
   process.exit(1)
 }
 
-const dishes = [
-  {
-    name: 'Carne en Vara',
-    tag: 'SIGNATURE · ½ LB',
-    description: 'Half a pound of beef slow-cooked on the vara over live wood fire.',
-    price: '$17.99',
-    category: 'en-vara',
-    featured: true,
-    available: true,
-    order: 1,
-  },
-  {
-    name: 'Cochino en Vara',
-    tag: 'PORK BELLY · ½ LB',
-    description: 'Fire-roasted pork belly, crackling skin, melting center.',
-    price: '$14.99',
-    category: 'en-vara',
-    featured: true,
-    available: true,
-    order: 2,
-  },
-  {
-    name: 'Tacos de Carne en Vara',
-    tag: '3 TACOS',
-    description: 'Three tacos loaded with our fire-grilled carne en vara.',
-    price: '$12.99',
-    category: 'platos',
-    featured: true,
-    available: true,
-    order: 3,
-  },
-  {
-    name: 'Griddled Sweet Corn',
-    tag: 'CONTORNO',
-    description: 'Charred sweet corn with butter, salt, and wood-fire smoke.',
-    price: '$5.99',
-    category: 'contornos',
-    featured: true,
-    available: true,
-    order: 4,
-  },
-  {
-    name: 'Cachapa con Queso de Mano',
-    tag: 'CACHAPA',
-    description: 'Traditional sweet corn pancake with fresh queso de mano.',
-    price: '$12.99',
-    category: 'cachapas',
-    featured: true,
-    available: true,
-    order: 5,
-  },
-  {
-    name: 'Picadillo Llanero',
-    tag: 'SOPA',
-    description: 'Hearty llanero-style soup with shredded beef and vegetables.',
-    price: '$15.99',
-    category: 'sopa',
-    featured: true,
-    available: true,
-    order: 6,
-  },
-  {
-    name: 'Tacos de Chicharrón',
-    tag: '3 TACOS',
-    description: 'Three tacos with crispy chicharrón and guasacaca.',
-    price: '$12.99',
-    category: 'platos',
-    featured: false,
-    available: true,
-    order: 7,
-  },
-  {
-    name: 'Tostones de Carne en Vara',
-    tag: '3 TOSTONES',
-    description: 'Crispy tostones topped with fire-grilled carne en vara.',
-    price: '$12.99',
-    category: 'platos',
-    featured: false,
-    available: true,
-    order: 8,
-  },
-  {
-    name: 'Combo Para 1',
-    tag: 'COMBO',
-    description: '¼ lb carne, ¼ lb cochino, chorizo, yuca, plátano, ensalada + bebida.',
-    price: '$27.00',
-    category: 'combos',
-    featured: false,
-    available: true,
-    order: 9,
-  },
-  {
-    name: 'Yuca Frita',
-    tag: 'CONTORNO',
-    description: 'Golden fried yuca served with nata and guasacaca.',
-    price: '$5.99',
-    category: 'contornos',
-    featured: false,
-    available: true,
-    order: 10,
-  },
-]
+const catalogPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../src/data/catalog.json')
+const catalog = JSON.parse(readFileSync(catalogPath, 'utf8'))
+
+function findMediaId(mediaDocs, key) {
+  if (!key) return undefined
+  const match = mediaDocs.find((m) => {
+    const filename = String(m.filename || '')
+    const publicId = String(m.cloudinary?.public_id || '')
+    const alt = String(m.alt || '')
+    return filename.includes(key) || publicId.includes(key) || alt.toLowerCase().includes(key.replace(/-/g, ' '))
+  })
+  return match?._id
+}
 
 async function main() {
   await mongoose.connect(uri, { serverSelectionTimeoutMS: 12000 })
   const db = mongoose.connection.db
-  const col = db.collection('dishes')
+  const dishesCol = db.collection('dishes')
+  const packagesCol = db.collection('catering-packages')
+  const mediaCol = db.collection('media')
+  const globalsCol = db.collection('globals')
 
-  const existing = await col.countDocuments()
-  if (existing > 0) {
-    await col.deleteMany({})
-    console.log(`Cleared ${existing} existing dishes.`)
+  const mediaDocs = await mediaCol.find({}).toArray()
+  console.log(`Found ${mediaDocs.length} media files in admin.`)
+
+  const existingDishes = await dishesCol.countDocuments()
+  if (existingDishes > 0) {
+    await dishesCol.deleteMany({})
+    console.log(`Cleared ${existingDishes} existing dishes.`)
+  }
+
+  const existingPackages = await packagesCol.countDocuments()
+  if (existingPackages > 0) {
+    await packagesCol.deleteMany({})
+    console.log(`Cleared ${existingPackages} existing catering packages.`)
   }
 
   const now = new Date()
-  const docs = dishes.map((d) => ({
-    ...d,
+
+  const dishDocs = catalog.dishes.map((d) => ({
+    slug: d.slug,
+    name: d.name,
+    tag: d.tag,
+    description: d.description,
+    price: d.price,
+    category: d.category,
+    image: findMediaId(mediaDocs, d.image),
+    featured: d.featured,
+    available: true,
+    order: d.order,
     createdAt: now,
     updatedAt: now,
   }))
 
-  const result = await col.insertMany(docs)
-  console.log(`Seeded ${result.insertedCount} dishes into MongoDB.`)
-  console.log('UI demo images: public/images/dishes/* (already wired in mock-data).')
+  const dishResult = await dishesCol.insertMany(dishDocs)
+  console.log(`Seeded ${dishResult.insertedCount} dishes (EN + ES).`)
+
+  const packageDocs = catalog.packages.map((p) => ({
+    slug: p.slug,
+    name: p.name,
+    guestRange: p.guestRange,
+    price: p.price,
+    description: p.description,
+    features: p.features.en.map((_, i) => ({
+      feature: { en: p.features.en[i], es: p.features.es[i] },
+    })),
+    highlighted: p.highlighted,
+    order: p.order,
+    createdAt: now,
+    updatedAt: now,
+  }))
+
+  const pkgResult = await packagesCol.insertMany(packageDocs)
+  console.log(`Seeded ${pkgResult.insertedCount} catering packages (EN + ES).`)
+
+  await globalsCol.updateOne(
+    { globalType: 'menu-page' },
+    {
+      $set: {
+        footerNote: catalog.footerNote,
+        updatedAt: now,
+      },
+      $setOnInsert: {
+        globalType: 'menu-page',
+        createdAt: now,
+      },
+    },
+    { upsert: true },
+  )
+  console.log('Updated menu-page footer note (EN + ES).')
+
   await mongoose.disconnect()
 }
 

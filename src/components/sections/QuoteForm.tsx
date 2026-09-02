@@ -1,13 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import type { CateringPackage } from '@/lib/mock-data'
 import { StaggerItem, StaggerReveal } from '@/components/motion/StaggerReveal'
+import { ThemeSelect } from '@/components/ui/ThemeSelect'
 
 interface QuoteFormProps {
   title?: string
   description?: string
   packages: CateringPackage[]
+  selectedSlug?: string
 }
 
 const initialForm = {
@@ -20,7 +23,7 @@ const initialForm = {
   location: '',
   package: '',
   budget: '',
-  preferredContact: 'Email',
+  preferredContact: 'email',
   notes: '',
 }
 
@@ -46,10 +49,18 @@ const labelStyle: React.CSSProperties = {
   marginBottom: '6px',
 }
 
-export function QuoteForm({ title = "Let's plan your feast", description, packages }: QuoteFormProps) {
-  const [form, setForm] = useState(initialForm)
+export function QuoteForm({ title = "Let's plan your feast", description, packages, selectedSlug = '' }: QuoteFormProps) {
+  const t = useTranslations('quote')
+  const locale = useLocale()
+  const [form, setForm] = useState({ ...initialForm, package: selectedSlug })
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    if (selectedSlug) {
+      setForm((prev) => ({ ...prev, package: selectedSlug }))
+    }
+  }, [selectedSlug])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -63,12 +74,17 @@ export function QuoteForm({ title = "Let's plan your feast", description, packag
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, source: 'catering' }),
+        body: JSON.stringify({
+          ...form,
+          package: packages.find((p) => p.slug === form.package)?.name || form.package,
+          source: 'catering',
+          locale,
+        }),
       })
       const data = (await res.json()) as { success: boolean; message: string }
       if (data.success) {
         setStatus('success')
-        setMessage(data.message)
+        setMessage(t('success'))
         setForm(initialForm)
       } else {
         setStatus('error')
@@ -76,7 +92,7 @@ export function QuoteForm({ title = "Let's plan your feast", description, packag
       }
     } catch {
       setStatus('error')
-      setMessage('Something went wrong. Please try again.')
+      setMessage(t('error'))
     }
   }
 
@@ -95,7 +111,7 @@ export function QuoteForm({ title = "Let's plan your feast", description, packag
       >
         <StaggerItem>
           <p style={{ color: '#c84914', fontSize: '11px', letterSpacing: '0.35em', textTransform: 'uppercase', fontFamily: 'var(--font-body)', fontWeight: 500, marginBottom: '16px' }}>
-            Request a Quote
+            {t('label')}
           </p>
           <h2
             id="quote-heading"
@@ -111,62 +127,70 @@ export function QuoteForm({ title = "Let's plan your feast", description, packag
         </StaggerItem>
 
         <StaggerItem>
-        <form onSubmit={handleSubmit} noValidate aria-label="Catering quote form">
+        <form onSubmit={handleSubmit} noValidate aria-label={t('formLabel')}>
           <div
             style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px 24px', marginBottom: '24px' }}
           >
             <div>
-              <label htmlFor="fullName" style={labelStyle}>Full Name *</label>
+              <label htmlFor="fullName" style={labelStyle}>{t('fullName')}</label>
               <input id="fullName" name="fullName" required value={form.fullName} onChange={handleChange} style={fieldStyle} />
             </div>
             <div>
-              <label htmlFor="company" style={labelStyle}>Company</label>
+              <label htmlFor="company" style={labelStyle}>{t('company')}</label>
               <input id="company" name="company" value={form.company} onChange={handleChange} style={fieldStyle} />
             </div>
             <div>
-              <label htmlFor="phone" style={labelStyle}>Phone *</label>
+              <label htmlFor="phone" style={labelStyle}>{t('phone')}</label>
               <input id="phone" name="phone" type="tel" required value={form.phone} onChange={handleChange} style={fieldStyle} />
             </div>
             <div>
-              <label htmlFor="email" style={labelStyle}>Email *</label>
+              <label htmlFor="email" style={labelStyle}>{t('email')}</label>
               <input id="email" name="email" type="email" required value={form.email} onChange={handleChange} style={fieldStyle} />
             </div>
             <div>
-              <label htmlFor="eventDate" style={labelStyle}>Event Date *</label>
+              <label htmlFor="eventDate" style={labelStyle}>{t('eventDate')}</label>
               <input id="eventDate" name="eventDate" type="date" required value={form.eventDate} onChange={handleChange} style={{ ...fieldStyle, colorScheme: 'dark' }} />
             </div>
             <div>
-              <label htmlFor="guestCount" style={labelStyle}>Guest Count *</label>
-              <input id="guestCount" name="guestCount" required placeholder="e.g. 50" value={form.guestCount} onChange={handleChange} style={fieldStyle} />
+              <label htmlFor="guestCount" style={labelStyle}>{t('guestCount')}</label>
+              <input id="guestCount" name="guestCount" required placeholder={t('guestCountPlaceholder')} value={form.guestCount} onChange={handleChange} style={fieldStyle} />
             </div>
             <div style={{ gridColumn: '1 / -1' }}>
-              <label htmlFor="location" style={labelStyle}>Event Location *</label>
-              <input id="location" name="location" required placeholder="Venue / address" value={form.location} onChange={handleChange} style={fieldStyle} />
+              <label htmlFor="location" style={labelStyle}>{t('location')}</label>
+              <input id="location" name="location" required placeholder={t('locationPlaceholder')} value={form.location} onChange={handleChange} style={fieldStyle} />
             </div>
             <div>
-              <label htmlFor="package" style={labelStyle}>Interested Package</label>
-              <select id="package" name="package" value={form.package} onChange={handleChange} style={{ ...fieldStyle, cursor: 'pointer', appearance: 'none' }}>
-                <option value="">Select...</option>
-                {packages.map((p) => (
-                  <option key={p.id} value={p.name}>{p.name}</option>
-                ))}
-              </select>
+              <label htmlFor="package" style={labelStyle}>{t('package')}</label>
+              <ThemeSelect
+                id="package"
+                name="package"
+                value={form.package}
+                placeholder={t('select')}
+                options={packages.map((p) => ({ value: p.slug, label: p.name }))}
+                onChange={(value) => setForm((prev) => ({ ...prev, package: value }))}
+              />
             </div>
             <div>
-              <label htmlFor="budget" style={labelStyle}>Estimated Budget</label>
-              <input id="budget" name="budget" placeholder="e.g. $1,500" value={form.budget} onChange={handleChange} style={fieldStyle} />
+              <label htmlFor="budget" style={labelStyle}>{t('budget')}</label>
+              <input id="budget" name="budget" placeholder={t('budgetPlaceholder')} value={form.budget} onChange={handleChange} style={fieldStyle} />
             </div>
             <div>
-              <label htmlFor="preferredContact" style={labelStyle}>Preferred Contact</label>
-              <select id="preferredContact" name="preferredContact" value={form.preferredContact} onChange={handleChange} style={{ ...fieldStyle, cursor: 'pointer', appearance: 'none' }}>
-                <option value="Email">Email</option>
-                <option value="Phone">Phone</option>
-                <option value="WhatsApp">WhatsApp</option>
-              </select>
+              <label htmlFor="preferredContact" style={labelStyle}>{t('preferredContact')}</label>
+              <ThemeSelect
+                id="preferredContact"
+                name="preferredContact"
+                value={form.preferredContact}
+                options={[
+                  { value: 'email', label: t('contactEmail') },
+                  { value: 'phone', label: t('contactPhone') },
+                  { value: 'whatsapp', label: t('contactWhatsApp') },
+                ]}
+                onChange={(value) => setForm((prev) => ({ ...prev, preferredContact: value }))}
+              />
             </div>
             <div style={{ gridColumn: '1 / -1' }}>
-              <label htmlFor="notes" style={labelStyle}>Additional Notes</label>
-              <textarea id="notes" name="notes" rows={3} placeholder="Dietary needs, theme, timing..." value={form.notes} onChange={handleChange} style={{ ...fieldStyle, resize: 'none' }} />
+              <label htmlFor="notes" style={labelStyle}>{t('notes')}</label>
+              <textarea id="notes" name="notes" rows={3} placeholder={t('notesPlaceholder')} value={form.notes} onChange={handleChange} style={{ ...fieldStyle, resize: 'none' }} />
             </div>
           </div>
 
@@ -182,7 +206,7 @@ export function QuoteForm({ title = "Let's plan your feast", description, packag
             className="btn-primary"
             style={{ opacity: status === 'loading' ? 0.6 : 1 }}
           >
-            {status === 'loading' ? 'Sending...' : 'Request My Quote →'}
+            {status === 'loading' ? t('sending') : t('submit')}
           </button>
         </form>
         </StaggerItem>

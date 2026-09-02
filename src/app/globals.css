@@ -14,6 +14,7 @@
 
   --font-display: var(--font-cormorant), Georgia, serif;
   --font-body: var(--font-outfit), system-ui, sans-serif;
+  --font-brand: var(--font-trocchi), Trocchi, Rockwell, serif;
 }
 
 :root {
@@ -21,6 +22,7 @@
   --foreground: #ede0cc;
   --font-display: var(--font-cormorant), Georgia, serif;
   --font-body: var(--font-outfit), system-ui, sans-serif;
+  --font-brand: var(--font-trocchi), Trocchi, Rockwell, serif;
 }
 
 /* Native smooth scrolling disabled — Lenis handles inertia scroll on the site */
@@ -58,6 +60,57 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-body) !important;
 }
 
+.brand-wordmark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #d9c4a3;
+  line-height: 1;
+  user-select: none;
+  font-weight: 400;
+  font-style: normal;
+}
+.brand-wordmark-top {
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.brand-wordmark-rule {
+  display: block;
+  width: 100%;
+  height: 2.5px;
+  margin: 4px 0 5px;
+}
+.brand-wordmark-bottom {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.brand-wordmark-star {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  display: block;
+  overflow: visible;
+  color: inherit;
+  transform: translateY(-1px);
+}
+.brand-wordmark.is-compact .brand-wordmark-top {
+  font-size: 13.5px;
+}
+.brand-wordmark.is-compact .brand-wordmark-bottom {
+  font-size: 6.75px;
+}
+.brand-wordmark.is-compact .brand-wordmark-rule {
+  height: 2px;
+  margin: 3px 0 4px;
+}
+
 /* ── Explicit bg/text fallbacks for color names that may conflict ── */
 .bg-bg {
   background-color: #1a0e10 !important;
@@ -65,6 +118,28 @@ h1, h2, h3, h4, h5, h6 {
 
 .text-bg {
   color: #1a0e10 !important;
+}
+
+/* Chrome/Safari paint a white box on autofilled fields — keep the underline look */
+form input:-webkit-autofill,
+form input:-webkit-autofill:hover,
+form input:-webkit-autofill:focus,
+form input:-webkit-autofill:active,
+form textarea:-webkit-autofill,
+form textarea:-webkit-autofill:hover,
+form textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ede0cc !important;
+  caret-color: #ede0cc;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  box-shadow: none !important;
+  transition: background-color 99999s ease-out 0s;
+}
+
+form input:autofill,
+form textarea:autofill {
+  background: transparent;
+  color: #ede0cc;
 }
 
 /* ── Animations ─────────────────────────────────────── */
@@ -150,6 +225,34 @@ h1, h2, h3, h4, h5, h6 {
   padding: 16px 32px;
 }
 
+.hero-video-toggle {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: #d9c4a3;
+  background: rgba(26, 14, 16, 0.55);
+  border: 1px solid rgba(217, 196, 163, 0.45);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.hero-video-toggle:hover {
+  color: #1a0e10;
+  background: #d9c4a3;
+  border-color: #d9c4a3;
+}
+.hero-video-toggle:focus-visible {
+  outline: 2px solid #d9c4a3;
+  outline-offset: 3px;
+}
+
 /* Text link with underline fill L→R */
 .link-underline {
   position: relative;
@@ -166,7 +269,9 @@ h1, h2, h3, h4, h5, h6 {
   flex-shrink: 0;
 }
 .link-underline::after,
-.nav-link::after {
+.nav-link::after,
+.footer-link::after,
+.footer-link-sm::after {
   content: '';
   position: absolute;
   left: 0;
@@ -179,7 +284,9 @@ h1, h2, h3, h4, h5, h6 {
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .link-underline:hover::after,
-.nav-link:hover::after {
+.nav-link:hover::after,
+.footer-link:hover::after,
+.footer-link-sm:hover::after {
   transform: scaleX(1);
 }
 
@@ -201,12 +308,68 @@ h1, h2, h3, h4, h5, h6 {
   color: #ede0cc;
 }
 
+.footer-link {
+  position: relative;
+  display: inline-block;
+  color: rgba(237, 224, 204, 0.65);
+  font-size: 0.9375rem;
+  text-decoration: none;
+  font-family: var(--font-body);
+  transition: color 0.2s ease;
+}
+.footer-link:hover {
+  color: rgba(237, 224, 204, 0.92);
+}
+.footer-link-sm {
+  position: relative;
+  display: inline-block;
+  color: rgba(237, 224, 204, 0.5);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-family: var(--font-body);
+  transition: color 0.2s ease;
+}
+.footer-link-sm:hover {
+  color: rgba(237, 224, 204, 0.85);
+}
+
 /* ── Hover states for server components ─────────────── */
 .catering-card {
   transition: border-color 0.3s;
 }
 .catering-card:hover {
   border-color: rgba(200, 73, 20, 0.4) !important;
+}
+
+.dish-card {
+  position: relative;
+  overflow: hidden;
+}
+.dish-card-image {
+  transform: scale(1);
+  filter: brightness(0.94);
+  transition:
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dish-card-dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 14, 16, 0.1);
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) {
+  .dish-card:hover .dish-card-image {
+    transform: scale(1.03);
+    filter: brightness(1.03);
+  }
+  .dish-card:hover .dish-card-dim {
+    opacity: 0;
+  }
 }
 
 /* ── Price list dotted leader ───────────────────────── */
@@ -217,4 +380,55 @@ h1, h2, h3, h4, h5, h6 {
   min-width: 1rem;
   align-self: flex-end;
   margin-bottom: 0.35rem;
+}
+
+/* ── Themed custom select ───────────────────────────── */
+.theme-select-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #3a1e10;
+  padding: 0 0 10px;
+  color: #ede0cc;
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+  text-align: left;
+  cursor: pointer;
+}
+.theme-select-trigger:hover {
+  border-bottom-color: #c84914;
+}
+.theme-select-menu {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  background: #1a0e10;
+  border: 1px solid #3a1e10;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+.theme-select-option {
+  width: 100%;
+  display: block;
+  background: transparent;
+  border: none;
+  padding: 10px 14px;
+  color: rgba(237, 224, 204, 0.85);
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+  text-align: left;
+  cursor: pointer;
+}
+.theme-select-option:hover,
+.theme-select-option.is-selected {
+  background: rgba(200, 73, 20, 0.28);
+  color: #ede0cc;
 }

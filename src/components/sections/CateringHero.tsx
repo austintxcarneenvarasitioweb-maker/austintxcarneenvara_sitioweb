@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server'
 import { PageHero } from '@/components/ui/PageHero'
 
 interface CateringHeroProps {
@@ -6,14 +7,16 @@ interface CateringHeroProps {
   imageUrl?: string
 }
 
-export function CateringHero({
+export async function CateringHero({
   title = 'We bring the *fire* to you',
   subtitle,
   imageUrl,
 }: CateringHeroProps) {
+  const t = await getTranslations('sections')
+
   return (
     <PageHero
-      label="CATERING & EVENTS"
+      label={t('cateringEvents').toUpperCase()}
       title={title}
       subtitle={subtitle}
       imageUrl={imageUrl}
