@@ -52,7 +52,9 @@ function StoryBlock({ section, index }: { section: StorySection; index: number }
 
   const imageCol = (
     <div
-      className={`relative min-h-[50vh] lg:min-h-[65vh] overflow-hidden${imageLeft ? '' : ' lg:order-2'}`}
+      className={`relative order-1 min-h-[42vh] overflow-hidden sm:min-h-[50vh] lg:min-h-[65vh] ${
+        imageLeft ? 'lg:order-1' : 'lg:order-2'
+      }`}
     >
       {section.imageUrl ? (
         <motion.div
@@ -75,10 +77,10 @@ function StoryBlock({ section, index }: { section: StorySection; index: number }
 
   const textCol = (
     <div
-      className={`flex flex-col justify-center${imageLeft ? '' : ' lg:order-1'}`}
+      className={`order-2 flex flex-col justify-center ${imageLeft ? 'lg:order-2' : 'lg:order-1'}`}
       style={{
         backgroundColor: '#1a0e10',
-        padding: 'clamp(48px, 6vw, 96px) clamp(24px, 4vw, 64px)',
+        padding: 'clamp(40px, 6vw, 96px) clamp(24px, 4vw, 64px)',
       }}
     >
       <p
@@ -129,8 +131,8 @@ function StoryBlock({ section, index }: { section: StorySection; index: number }
       animate={inView || showOnLoad ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
     >
-      {imageLeft ? imageCol : textCol}
-      {imageLeft ? textCol : imageCol}
+      {imageCol}
+      {textCol}
     </motion.div>
   )
 }
@@ -145,7 +147,7 @@ export function StorySections({ sections }: StorySectionProps) {
           padding: '0 24px',
           display: 'flex',
           flexDirection: 'column',
-          gap: '100px',
+          gap: 'clamp(48px, 8vw, 100px)',
         }}
       >
         {sections.map((section, index) => (

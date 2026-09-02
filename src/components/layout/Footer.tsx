@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { getTranslations } from 'next-intl/server'
 import { BrandLogo, BrandWordmark } from '@/components/brand/BrandLogo'
 import { FlameIcon } from '@/components/ui/FlameIcon'
@@ -7,6 +8,63 @@ import type { SiteSettings } from '@/lib/mock-data'
 interface FooterProps {
   settings: SiteSettings
   locale: string
+}
+
+function PinIcon() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 12 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+      <circle cx="6" cy="5.5" r="2.5" />
+      <path d="M6 0C3.24 0 1 2.24 1 5c0 4 5 11 5 11s5-7 5-11c0-2.76-2.24-5-5-5z" />
+    </svg>
+  )
+}
+
+function ClockIcon() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+      <circle cx="7" cy="7" r="6" />
+      <path d="M7 4v3.5l2 2" />
+    </svg>
+  )
+}
+
+function SocialGlyph({ children }: { children: ReactNode }) {
+  return (
+    <svg
+      className="footer-social-icon"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden
+    >
+      {children}
+    </svg>
+  )
+}
+
+function InstagramIcon() {
+  return (
+    <SocialGlyph>
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+    </SocialGlyph>
+  )
+}
+
+function FacebookIcon() {
+  return (
+    <SocialGlyph>
+      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+    </SocialGlyph>
+  )
+}
+
+function TikTokIcon() {
+  return (
+    <SocialGlyph>
+      <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
+    </SocialGlyph>
+  )
 }
 
 export async function Footer({ settings, locale }: FooterProps) {
@@ -20,121 +78,104 @@ export async function Footer({ settings, locale }: FooterProps) {
     { label: t('contact'), href: '/contact' as const },
   ]
 
-  const headingStyle: React.CSSProperties = {
-    color: 'rgba(237,224,204,0.4)',
-    fontSize: '10px',
-    letterSpacing: '0.3em',
-    textTransform: 'uppercase',
-    fontFamily: 'var(--font-display)',
-    fontWeight: 300,
-    marginBottom: '16px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-  }
+  const socials = [
+    settings.instagram
+      ? { label: 'Instagram', href: settings.instagram, icon: <InstagramIcon /> }
+      : null,
+    settings.facebook ? { label: 'Facebook', href: settings.facebook, icon: <FacebookIcon /> } : null,
+    settings.tiktok ? { label: 'TikTok', href: settings.tiktok, icon: <TikTokIcon /> } : null,
+  ].filter((item): item is { label: string; href: string; icon: ReactNode } => Boolean(item))
 
   return (
-    <footer style={{ backgroundColor: '#1a0e10', borderTop: '1px solid #3a1e10' }}>
-      <div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
-        style={{ maxWidth: '1400px', margin: '0 auto', padding: '56px 24px', gap: '40px' }}
-      >
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-            <BrandLogo size={40} alt="" />
-            <BrandWordmark />
+    <footer className="site-footer">
+      <div className="footer-inner">
+        <div className="footer-brand">
+          <div className="footer-brand-intro">
+            <div className="footer-brand-lockup">
+              <BrandLogo size={44} alt="" />
+              <BrandWordmark />
+            </div>
+            <p className="footer-brand-copy">{t('brandDescription')}</p>
           </div>
-          <p style={{ color: 'rgba(237,224,204,0.5)', fontSize: '0.875rem', lineHeight: 1.7, fontFamily: 'var(--font-body)' }}>
-            {t('brandDescription')}
-          </p>
+          {socials.length > 0 && (
+            <div className="footer-socials">
+              {socials.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social"
+                >
+                  {social.icon}
+                  <span className="footer-link-sm">{social.label}</span>
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
-        <div>
-          <h4 style={headingStyle}>{t('explore')}</h4>
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-            {exploreLinks.map((link) => (
-              <li key={link.href} style={{ marginBottom: '8px' }}>
-                <Link href={link.href} className="footer-link">
-                  {link.label}
-                </Link>
+        <div className="footer-columns">
+          <nav className="footer-col" aria-label={t('explore')}>
+            <h4 className="footer-heading">{t('explore')}</h4>
+            <ul className="footer-list footer-list-nav">
+              {exploreLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="footer-link">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="footer-col">
+            <h4 className="footer-heading">
+              <PinIcon />
+              {t('visitUs')}
+            </h4>
+            <ul className="footer-list">
+              <li className="footer-address">{settings.address}</li>
+              <li>
+                <a href={`tel:${settings.phone.replace(/\D/g, '')}`} className="footer-link">
+                  {settings.phone}
+                </a>
               </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h4 style={headingStyle}>
-            <svg width="12" height="16" viewBox="0 0 12 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <circle cx="6" cy="5.5" r="2.5" />
-              <path d="M6 0C3.24 0 1 2.24 1 5c0 4 5 11 5 11s5-7 5-11c0-2.76-2.24-5-5-5z" />
-            </svg>
-            {t('visitUs')}
-          </h4>
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-            <li style={{ color: 'rgba(237,224,204,0.65)', fontSize: '0.875rem', marginBottom: '10px', fontFamily: 'var(--font-body)' }}>
-              {settings.address}
-            </li>
-            <li style={{ marginBottom: '10px' }}>
-              <a href={`tel:${settings.phone.replace(/\D/g, '')}`} className="footer-link">
-                {settings.phone}
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${settings.email}`} className="footer-link">
-                {settings.email}
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 style={headingStyle}>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <circle cx="7" cy="7" r="6" />
-              <path d="M7 4v3.5l2 2" />
-            </svg>
-            {t('hours')}
-          </h4>
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0, marginBottom: '24px' }}>
-            {settings.hours.map((h) => (
-              <li
-                key={h.day}
-                style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', color: 'rgba(237,224,204,0.6)', fontSize: '0.8125rem', marginBottom: '6px', fontFamily: 'var(--font-body)' }}
-              >
-                <span>{h.day}</span>
-                <span style={{ textAlign: 'right' }}>{h.time}</span>
+              <li>
+                <a href={`mailto:${settings.email}`} className="footer-link footer-link-email">
+                  {settings.email}
+                </a>
               </li>
-            ))}
-          </ul>
-          <div style={{ display: 'flex', gap: '16px' }}>
-            {settings.instagram && (
-              <a href={settings.instagram} target="_blank" rel="noopener noreferrer" className="footer-link-sm">
-                Instagram
-              </a>
-            )}
-            {settings.facebook && (
-              <a href={settings.facebook} target="_blank" rel="noopener noreferrer" className="footer-link-sm">
-                Facebook
-              </a>
-            )}
-            {settings.tiktok && (
-              <a href={settings.tiktok} target="_blank" rel="noopener noreferrer" className="footer-link-sm">
-                TikTok
-              </a>
-            )}
+            </ul>
+          </div>
+
+          <div className="footer-col footer-col-hours">
+            <h4 className="footer-heading">
+              <ClockIcon />
+              {t('hours')}
+            </h4>
+            <ul className="footer-list footer-hours">
+              {settings.hours.map((h) => (
+                <li key={h.day} className="footer-hour">
+                  <span className="footer-hour-day">{h.day}</span>
+                  <span className="footer-hour-time">{h.time}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
 
-      <div style={{ borderTop: '1px solid #3a1e10' }}>
-        <div
-          style={{ maxWidth: '1400px', margin: '0 auto', padding: '20px 24px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}
-        >
-          <p style={{ color: '#7a6558', fontSize: '12px', fontFamily: 'var(--font-body)' }}>
+      <div className="footer-bottom">
+        <div className="footer-bottom-inner">
+          <p className="footer-bottom-text">
             © {new Date().getFullYear()} {settings.storeName}. {t('rights')}
           </p>
-          <p style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#7a6558', fontSize: '12px', fontFamily: 'var(--font-body)' }}>
-            <FlameIcon style={{ color: '#c84914' }} />
+          <span className="footer-bottom-sep" aria-hidden>
+            ·
+          </span>
+          <p className="footer-bottom-text footer-bottom-tagline">
+            <FlameIcon style={{ color: '#c84914', width: 13, height: 13 }} />
             {settings.tagline || t('tagline')}
           </p>
         </div>
