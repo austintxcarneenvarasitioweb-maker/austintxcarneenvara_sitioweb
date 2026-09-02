@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 import { z } from 'zod'
-import { businessNotificationHtml, customerConfirmationHtml } from '@/lib/email-templates'
+import { businessNotificationHtml, customerConfirmationHtml, getEmailLogoAttachment } from '@/lib/email-templates'
 import { getPayloadClient } from '@/lib/payload'
 
 const contactSchema = z.object({
@@ -75,6 +75,13 @@ export async function POST(req: Request): Promise<Response> {
 
     if (apiKey) {
       const resend = new Resend(apiKey)
+      let logo
+      try {
+        logo = await getEmailLogoAttachment()
+      } catch (logoError) {
+        console.warn('Email logo attachment skipped:', logoError)
+      }
+      const attachments = logo ? [logo] : undefined
 
       if (toEmail) {
         const staff = await resend.emails.send({
@@ -90,6 +97,7 @@ export async function POST(req: Request): Promise<Response> {
             notes,
             preferredContact,
           }),
+          attachments,
         })
         if (staff.error) console.error('Staff email failed:', staff.error)
       }
@@ -111,6 +119,7 @@ export async function POST(req: Request): Promise<Response> {
           source: data.source,
           locale: data.locale,
         }),
+        attachments,
       })
       if (customer.error) console.error('Customer confirmation email failed:', customer.error)
     }

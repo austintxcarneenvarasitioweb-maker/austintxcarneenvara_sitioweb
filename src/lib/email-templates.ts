@@ -1,4 +1,9 @@
 import { getSiteUrl } from '@/lib/site-url'
+import { readFile } from 'node:fs/promises'
+import path from 'node:path'
+
+/** Inline CID so clients do not fetch the logo from a remote URL. */
+export const EMAIL_LOGO_CID = 'logo'
 
 const COLORS = {
   bg: '#140a08',
@@ -24,7 +29,7 @@ function escapeHtml(value?: string) {
 }
 
 function logoUrl() {
-  return `${getSiteUrl()}/images/LOGO.png`
+  return `cid:${EMAIL_LOGO_CID}`
 }
 
 function brandHeader() {
@@ -33,7 +38,7 @@ function brandHeader() {
     <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px;">
       <tr>
         <td style="vertical-align:middle;padding-right:12px;width:44px;">
-          <img src="${src}" alt="Austin TX Carne en Vara" width="44" height="44" style="display:block;width:44px;height:44px;border-radius:50%;border:0;outline:none;text-decoration:none;" />
+          <img src="${src}" alt="" width="44" height="44" style="display:block;width:44px;height:44px;border-radius:50%;border:0;outline:none;text-decoration:none;" />
         </td>
         <td style="vertical-align:middle;">
           <table role="presentation" cellpadding="0" cellspacing="0" border="0">
@@ -267,4 +272,27 @@ export function businessNotificationHtml(input: {
   `,
     { locale: 'es', preheader },
   )
+}
+
+export async function getEmailLogoAttachment() {
+  const localPath = path.join(process.cwd(), 'public', 'images', 'LOGO.png')
+  try {
+    const content = await readFile(localPath)
+    return {
+      filename: 'logo.png',
+      content,
+      contentType: 'image/png',
+      contentId: EMAIL_LOGO_CID,
+    }
+  } catch {
+    const origin = getSiteUrl()
+    const res = await fetch(`${origin}/images/LOGO.png`)
+    if (!res.ok) throw new Error(`Logo fetch failed: ${res.status}`)
+    return {
+      filename: 'logo.png',
+      content: Buffer.from(await res.arrayBuffer()),
+      contentType: 'image/png',
+      contentId: EMAIL_LOGO_CID,
+    }
+  }
 }

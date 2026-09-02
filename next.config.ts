@@ -5,6 +5,9 @@ import type { NextConfig } from 'next'
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
 const nextConfig: NextConfig = {
+  outputFileTracingIncludes: {
+    '/api/contact': ['./public/images/LOGO.png'],
+  },
   images: {
     unoptimized: true,
     remotePatterns: [
