@@ -78,13 +78,16 @@ export async function Footer({ settings, locale }: FooterProps) {
     { label: t('contact'), href: '/contact' as const },
   ]
 
-  const socials = [
-    settings.instagram
-      ? { label: 'Instagram', href: settings.instagram, icon: <InstagramIcon /> }
-      : null,
-    settings.facebook ? { label: 'Facebook', href: settings.facebook, icon: <FacebookIcon /> } : null,
-    settings.tiktok ? { label: 'TikTok', href: settings.tiktok, icon: <TikTokIcon /> } : null,
-  ].filter((item): item is { label: string; href: string; icon: ReactNode } => Boolean(item))
+  const socials: { label: string; href: string; icon: ReactNode }[] = []
+  if (settings.instagram) {
+    socials.push({ label: 'Instagram', href: settings.instagram, icon: <InstagramIcon /> })
+  }
+  if (settings.facebook) {
+    socials.push({ label: 'Facebook', href: settings.facebook, icon: <FacebookIcon /> })
+  }
+  if (settings.tiktok) {
+    socials.push({ label: 'TikTok', href: settings.tiktok, icon: <TikTokIcon /> })
+  }
 
   return (
     <footer className="site-footer">
