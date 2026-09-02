@@ -7,7 +7,7 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 import { cloudinaryStorage } from 'payload-cloudinary'
-import type { SharpDependency } from 'payload'
+import type { Field, Plugin, SharpDependency } from 'payload'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -86,16 +86,20 @@ export default buildConfig({
       collections: { media: true },
       folder: 'carnes-en-vara',
     }),
-    (config) => ({
+    ((config) => ({
       ...config,
       collections: config.collections?.map((collection) => ({
         ...collection,
-        fields: collection.fields?.map((field) =>
-          'name' in field && (field.name === 'cloudinary' || field.name === 'versions')
-            ? { ...field, admin: { ...field.admin, hidden: true } }
-            : field,
-        ),
+        fields: collection.fields.map((field): Field => {
+          if ('name' in field && (field.name === 'cloudinary' || field.name === 'versions')) {
+            return {
+              ...field,
+              admin: { ...field.admin, hidden: true },
+            } as Field
+          }
+          return field
+        }),
       })),
-    }),
+    })) as Plugin,
   ],
 })
