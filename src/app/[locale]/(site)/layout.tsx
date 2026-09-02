@@ -7,6 +7,7 @@ import { SmoothScroll } from '@/components/layout/SmoothScroll'
 import { PageTransition } from '@/components/motion/PageTransition'
 import { cormorant, outfit, trocchi } from '@/lib/fonts'
 import { getSiteSettings } from '@/lib/site-content'
+import { getSiteUrl } from '@/lib/site-url'
 import { routing } from '@/i18n/routing'
 import '../../globals.css'
 
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       default: t('defaultTitle'),
     },
     description: t('defaultDescription'),
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3001'),
+    metadataBase: new URL(getSiteUrl()),
     icons: {
       icon: [{ url: '/images/LOGO.png', type: 'image/png' }],
       apple: [{ url: '/images/LOGO.png', type: 'image/png' }],
